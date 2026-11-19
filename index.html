@@ -131,18 +131,21 @@ window.LP_CONFIG = {
   .bonus{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;border:1px dashed var(--line);font-size:14.5px;color:var(--muted)}
   .bonus b{flex:none;padding:5px 10px;border-radius:8px;background:var(--grad);color:#000;font-family:var(--display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:13px}
 
-  /* garantia */
-  .gar{padding:22px 18px;display:flex;flex-direction:column;gap:14px}
-  .gar h2{text-align:center;font-size:clamp(24px,7vw,30px)}
-  .gar h2 span{display:inline-block;padding:0 12px 3px;border-radius:9px;background:var(--grad);color:#000;font-style:italic}
-  .gar p{margin:0}
-  .gar .lead{text-align:center;font-size:16.5px;color:var(--muted)}
-  .gar .lead strong{color:var(--fg)}
-  .rules{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
-  .rules li{padding:7px 11px;border-radius:999px;border:1px solid var(--line);font-size:13.5px;font-weight:600;background:rgba(255,194,26,.05)}
-  .warn{padding:12px 14px;border-radius:12px;background:rgba(255,107,87,.08);border:1px solid rgba(255,107,87,.45);font-size:14.5px;color:#FFD4CC}
+  /* garantia (versão completa) */
+  .rule{height:2px;width:72%;margin:0 auto;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 12px rgba(255,190,0,.7)}
+  .sub{margin:0;color:var(--muted);font-size:17px;text-align:center}
+  .disc{padding:16px 18px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line-soft);font-size:15px;color:var(--muted)}
+  .disc strong{color:var(--fg)}
+  .guarantee{position:relative;overflow:hidden;padding:28px 20px;display:flex;flex-direction:column;gap:20px}
+  .gtitle{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;font-size:clamp(26px,7.6vw,36px)}
+  .gtitle .p{padding:2px 14px 4px;border-radius:10px;background:var(--grad);color:#000;font-style:italic}
+  .guarantee p{margin:0}
+  .rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .rules li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:15.5px;color:var(--muted)}
+  .rules li strong{color:var(--fg)}
+  .rules .n{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--gold);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:14px;color:var(--gold)}
+  .warn{padding:14px 16px;border-radius:12px;background:rgba(255,107,87,.08);border:1px solid rgba(255,107,87,.45);font-size:15px;color:#FFD4CC}
   .warn strong{color:#fff}
-  .fine{font-size:12.5px;color:var(--soft);text-align:center}
 
   /* formulário */
   .apply{padding:22px 16px;display:flex;flex-direction:column;gap:18px;scroll-margin-top:12px}
@@ -258,21 +261,23 @@ window.LP_CONFIG = {
   </section>
 
   <!-- GARANTIA -->
-  <section class="gar frame" aria-labelledby="h-gar">
-    <h2 id="h-gar">Garantia de <span>45 dias</span></h2>
-    <p class="lead">Fez a sua parte e não teve resultado em 45 dias? <strong>Devolvemos o seu dinheiro.</strong></p>
-    <p style="font-weight:700;font-size:14.5px">Vale para quem:</p>
-    <!-- CONFIRMAR: estas regras precisam ser IGUAIS às do contrato. -->
-    <ul class="rules">
-      <li>Investe a verba mínima em anúncios</li>
-      <li>Responde os clientes no prazo</li>
-      <li>Envia materiais e aprova criativos</li>
-      <li>Segue o processo de vendas</li>
-      <li>Vai às reuniões de acompanhamento</li>
-    </ul>
-    <p class="warn"><strong>Pensa em fechar só para pedir o dinheiro de volta?</strong> Nem aplique. Tudo é registrado e, sem cumprir o contrato, não há garantia.</p>
-    <!-- CONFIRMAR -->
-    <p class="fine">Não prometemos valor de faturamento. O critério de resultado, a verba de anúncios (paga à parte) e as regras de devolução estão no contrato.</p>
+  <section aria-labelledby="h-gar">
+    <div class="guarantee frame">
+      <h2 class="gtitle" id="h-gar">Garantia de <span class="p">45 dias</span></h2>
+      <p class="sub">Se você fizer a sua parte e o resultado combinado não acontecer em 45 dias, <strong style="color:var(--fg)">devolvemos o seu dinheiro.</strong> Simples assim.</p>
+      <div class="rule" aria-hidden="true"></div>
+      <p style="font-weight:700">A garantia é real e, por isso, tem regras. Ela vale só para quem:</p>
+      <!-- CONFIRMAR: estas regras precisam ser IGUAIS às do contrato. -->
+      <ol class="rules">
+        <li><span class="n">1</span><span><strong>Investe em anúncios</strong> a verba mínima definida no contrato, todos os meses do período.</span></li>
+        <li><span class="n">2</span><span><strong>Responde os contatos</strong> que chegam pelos anúncios dentro do prazo combinado.</span></li>
+        <li><span class="n">3</span><span><strong>Envia fotos e vídeos</strong> dos trabalhos e aprova os criativos nos prazos.</span></li>
+        <li><span class="n">4</span><span><strong>Segue o processo de vendas</strong> que implantamos e registra os atendimentos.</span></li>
+        <li><span class="n">5</span><span><strong>Participa das reuniões</strong> de acompanhamento.</span></li>
+      </ol>
+      <p class="disc">O que conta como <strong>resultado</strong> é definido por escrito no contrato, antes de começar. As regras completas da devolução estão no contrato.</p>
+      <p class="warn"><strong>Recado direto:</strong> se você pensa em fechar só para pedir o dinheiro de volta, nem aplique. Todo o processo é registrado e quem não cumpre as obrigações do contrato não tem direito à garantia.</p>
+    </div>
   </section>
 
   <!-- APLICAÇÃO -->
