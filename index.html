@@ -3,168 +3,649 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>10% OFF · Tatuador de Elite × Romba Tattoo</title>
-<meta name="description" content="Cadastre-se e garanta seu cupom de 10% de desconto com a Romba Tattoo.">
-<meta name="theme-color" content="#000000">
+<title>Tatuador de Elite · Resultados em 45 dias ou seu dinheiro de volta</title>
+<meta name="description" content="Marketing para tatuadores. Equipe de 3 profissionais, tráfego pago, criativos, Instagram e vendas. Resultados em 45 dias ou o seu dinheiro de volta. Vagas só para aprovados.">
+<meta name="theme-color" content="#050505">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Resultados em 45 dias ou o seu dinheiro de volta">
+<meta property="og:description" content="Marketing para tatuadores. Aplique para uma vaga.">
+<meta property="og:image" content="assets/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,800;0,900;1,800;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <script>
 /* =====================================================================
    CONFIGURAÇÃO — edite só este bloco
    ===================================================================== */
-window.CADASTRO_CONFIG = {
-  // URL que recebe o cadastro (webhook do Make/Zapier/n8n, API do seu CRM,
-  // Formspree, ou o Web App do Google Apps Script — veja integracao/apps-script-google-sheets.gs).
-  // Vazio = o formulário NÃO envia e mostra "cadastro indisponível".
+window.LP_CONFIG = {
+  // URL que recebe as aplicações (webhook Make/Zapier/n8n, CRM, Formspree
+  // ou Google Apps Script — veja integracao/apps-script-google-sheets.gs).
+  // Vazio = o formulário NÃO envia e avisa que a aplicação está indisponível.
   endpoint: "",
 
-  // Formato do envio:
-  //  "json"       → application/json (APIs e webhooks em geral)
-  //  "form"       → application/x-www-form-urlencoded (formulários clássicos)
-  //  "json-texto" → JSON como text/plain (use com Google Apps Script, evita bloqueio CORS)
+  // "json" | "form" | "json-texto" (use "json-texto" com Google Apps Script)
   formato: "json",
-
-  // Cabeçalhos extras (ex.: { "Authorization": "Bearer ..." }). Não coloque chaves secretas em páginas públicas.
   cabecalhos: {},
-
-  // Campos enviados junto com nome, telefone e email.
-  camposExtras: { origem: "lp-tatuador-de-elite-romba-tattoo" },
-
-  // Tempo máximo de espera pela confirmação (ms).
   tempoLimite: 15000,
 
-  // Como o cupom chega ao cliente DEPOIS do envio confirmado:
-  //  "resposta" → a ferramenta devolve o código no JSON da resposta (campo abaixo)
-  //  "fixo"     → a página mostra o código definido em codigoFixo
-  //  "email"    → a ferramenta envia o cupom por e-mail; a página só confirma
-  cupom: {
-    modo: "resposta",
-    campoNaResposta: "cupom",
-    codigoFixo: ""
-  }
+  // Enviado junto com cada aplicação.
+  camposExtras: { campanha: "tattoo-week" },
+
+  // Nome do evento mostrado no selo do topo. Vazio = sem selo.
+  evento: "Tattoo Week",
+
+  // Número do estande, ex.: "Estande 42". Vazio = não aparece.
+  estande: "",
+
+  // WhatsApp da equipe só com números, com DDI: ex. "5531999999999".
+  // Aparece como botão para leads aprovados. Vazio = não aparece.
+  whatsappEquipe: "",
+
+  // Em quanto tempo a equipe responde as aplicações (texto livre).
+  prazoContato: "24 horas úteis",
+
+  // Data REAL de encerramento das aplicações (ISO), ex.: "2026-11-23T20:00:00-03:00".
+  // Mostra contagem regressiva no topo. Vazio = sem contagem.
+  prazoAplicacoes: "",
+
+  // Depoimentos REAIS (com autorização). Lista vazia = seção não aparece.
+  // Ex.: { texto: "...", nome: "Ana Souza", detalhe: "Belo Horizonte · @ana.tattoo" }
+  depoimentos: []
 };
 </script>
 
 <style>
+  /* Direção: cartaz de estande — preto profundo, ouro com brilho, caixa-alta pesada.
+     Coluna única de leitura no celular, blocos com moldura dourada como no panfleto. */
   :root{
-    --bg:#000; --fg:#fff; --muted:#C7C7C7; --soft:#A3A3A3;
-    --line:#3D3D3D; --field:#111; --accent:#D4A23A; --error:#FF8A7A; --error-line:#FF6B57;
+    color-scheme:dark;
+    --bg:#050505; --panel:#0D0C0A; --panel-2:#15130F;
+    --fg:#FFFFFF; --muted:#CFCAC0; --soft:#9C968A;
+    --gold:#FFC21A; --gold-hi:#FFDD55; --gold-lo:#F29A00;
+    --line:rgba(255,194,26,.38); --line-soft:rgba(255,255,255,.12);
+    --error:#FF8A7A; --error-line:#FF6B57; --ok:#7BE0A0;
+    --display:'Montserrat','Arial Black',system-ui,sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --r:14px;
   }
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
-  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
-  .wrap{min-height:100vh;min-height:100dvh;display:flex;justify-content:center;padding:max(48px,env(safe-area-inset-top)) 24px max(64px,env(safe-area-inset-bottom))}
-  main{width:100%;max-width:480px;display:flex;flex-direction:column;gap:56px}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    background:radial-gradient(60% 40% at 0% 0%,rgba(255,170,0,.16),transparent 70%),radial-gradient(55% 35% at 100% 100%,rgba(255,170,0,.12),transparent 70%)}
+  img{max-width:100%;display:block}
+  a{color:var(--gold)}
+  .wrap{position:relative;z-index:1;width:100%;max-width:560px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+  section{padding-block:56px}
+  h1,h2,h3{font-family:var(--display);font-weight:900;text-transform:uppercase;letter-spacing:-.01em;line-height:1.02;margin:0;text-wrap:balance}
+  .gold{color:var(--gold);background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,var(--gold-lo));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-  .logos{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px}
-  .logo{height:clamp(96px,30vw,128px);display:flex;align-items:center;justify-content:center}
-  .logo img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
-  .logo--elite img{width:100%;max-width:168px;height:auto;border-radius:4px}
-  .x{font-family:'Pirata One',serif;font-size:30px;line-height:1;color:var(--accent)}
+  /* tag pill dourada, como "O QUE ESTÁ INCLUSO" */
+  .tag{display:inline-block;align-self:center;padding:10px 22px;border-radius:10px;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 60%,var(--gold-lo));color:#000;font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(18px,5.4vw,24px);line-height:1.1;box-shadow:0 0 28px rgba(255,180,0,.35)}
+  .rule{height:2px;width:72%;margin:0 auto;background:linear-gradient(90deg,transparent,var(--gold),transparent);box-shadow:0 0 12px rgba(255,190,0,.7)}
+  .frame{border:1.5px solid var(--line);border-radius:var(--r);background:linear-gradient(180deg,var(--panel-2),var(--panel));box-shadow:0 0 0 1px rgba(0,0,0,.6) inset,0 0 36px rgba(255,170,0,.08)}
 
-  .hero{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
-  h1{margin:0;font-family:'Pirata One',serif;font-weight:400;font-size:clamp(44px,13vw,60px);line-height:1.02;letter-spacing:.5px}
-  h1 span{color:var(--accent)}
-  .sub{margin:0;font-size:18px;line-height:1.55;color:var(--muted);max-width:400px}
+  /* botões */
+  .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:62px;padding:14px 20px;border:0;border-radius:12px;cursor:pointer;text-decoration:none;
+    background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,var(--gold-lo));color:#000;font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:18px;line-height:1.15;text-align:center;
+    box-shadow:0 10px 30px rgba(255,170,0,.28),0 0 0 1px rgba(255,230,140,.6) inset;transition:transform .12s,box-shadow .12s}
+  .btn:hover{transform:translateY(-1px);box-shadow:0 14px 36px rgba(255,170,0,.38),0 0 0 1px rgba(255,230,140,.8) inset}
+  .btn:active{transform:translateY(1px)}
+  .btn:focus-visible,.ghost:focus-visible,.copy:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .btn[disabled]{opacity:.65;cursor:progress;transform:none}
+  .btn svg{flex:none}
+  .ghost{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 20px;border-radius:12px;border:1.5px solid var(--line-soft);background:transparent;color:var(--fg);font:600 15px var(--body);cursor:pointer}
+  .micro{margin:0;text-align:center;font-size:14px;color:var(--soft)}
 
-  form{display:flex;flex-direction:column;gap:28px}
+  /* topo */
+  .top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:18px 0}
+  .top img{width:112px;height:auto;border-radius:6px}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:rgba(255,194,26,.06)}
+  .badge i{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulse 1.6s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+
+  /* hero */
+  .hero{padding-block:22px 48px;display:flex;flex-direction:column;gap:22px}
+  .kicker{text-align:center;font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:1;font-size:clamp(24px,7.4vw,34px)}
+  .kicker span{display:block;font-size:1.38em}
+  .photo{position:relative;margin-inline:-20px;margin-top:-4px;overflow:hidden}
+  .photo img{width:100%;height:auto;aspect-ratio:732/440;object-fit:cover;-webkit-mask-image:linear-gradient(180deg,#000 48%,transparent 92%);mask-image:linear-gradient(180deg,#000 48%,transparent 92%)}
+  .promise{margin-top:-64px;position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
+  .promise .l1{font-size:clamp(30px,9vw,44px)}
+  .pill45{display:inline-block;padding:4px 26px 6px;border-radius:16px;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,var(--gold-lo));color:#000;font-style:italic;font-size:clamp(58px,19vw,92px);line-height:1;box-shadow:0 0 40px rgba(255,180,0,.45),0 0 0 2px rgba(255,235,150,.7) inset}
+  .promise .l3{font-size:clamp(26px,8vw,38px)}
+  .lede{margin:0;text-align:center;font-size:18px;color:var(--muted);max-width:30em;margin-inline:auto}
+  .lede strong{color:var(--fg)}
+  .filter{display:flex;gap:10px;align-items:flex-start;padding:14px 16px;border-radius:12px;border:1px dashed var(--line);font-size:15px;color:var(--muted)}
+  .filter svg{flex:none;margin-top:2px;color:var(--gold)}
+  .filter strong{color:var(--fg)}
+  .countdown{display:flex;justify-content:center;gap:8px;align-items:baseline;font-size:14px;color:var(--muted)}
+  .countdown b{font-family:var(--display);font-weight:900;font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
+  .regions{display:flex;justify-content:center;gap:8px;flex-wrap:wrap}
+  .regions span{padding:6px 12px;border-radius:999px;border:1px solid var(--line-soft);font-size:13px;color:var(--muted)}
+
+  /* seções */
+  .stack{display:flex;flex-direction:column;gap:26px}
+  .center{text-align:center}
+  .h2{font-size:clamp(28px,8.4vw,40px)}
+  .sub{margin:0;color:var(--muted);font-size:17px;text-align:center}
+
+  .list{list-style:none;margin:0;padding:6px 18px}
+  .list li{display:grid;grid-template-columns:24px 30px 1fr;gap:12px;align-items:center;padding:15px 0;border-bottom:1px solid rgba(255,194,26,.18);font-weight:600;font-size:16.5px;line-height:1.3}
+  .list li:last-child{border-bottom:0}
+  .ck{width:24px;height:24px;border-radius:50%;background:var(--gold);display:grid;place-items:center;color:#000}
+  .ico{color:var(--gold)}
+  .bonus{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;padding:16px 18px}
+  .bonus b{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:8px;background:linear-gradient(180deg,var(--gold-hi),var(--gold));color:#000;font-family:var(--display);font-style:italic;font-weight:900;text-transform:uppercase;font-size:15px}
+  .bonus p{margin:0;font-size:15px;color:var(--muted)}
+  .bonus p strong{color:var(--fg)}
+
+  .money{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+  .money .s{font-family:var(--display);font-weight:900;font-style:italic;text-transform:uppercase;font-size:clamp(17px,5vw,22px);color:var(--gold)}
+  .money .n{font-family:var(--display);font-weight:900;line-height:.98;font-size:clamp(44px,14vw,66px);font-variant-numeric:tabular-nums}
+  .money .n small{font-size:.5em;color:var(--fg);vertical-align:.32em;margin-right:.12em}
+  .money .e{font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:clamp(20px,6vw,26px)}
+  .money .m{font-family:var(--display);font-weight:800;font-style:italic;text-transform:uppercase;font-size:clamp(15px,4.4vw,18px)}
+  .disc{padding:16px 18px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid var(--line-soft);font-size:15px;color:var(--muted)}
+  .disc strong{color:var(--fg)}
+
+  .guarantee{position:relative;overflow:hidden;padding:28px 20px;display:flex;flex-direction:column;gap:20px}
+  .gtitle{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;font-size:clamp(26px,7.6vw,36px)}
+  .gtitle .p{padding:2px 14px 4px;border-radius:10px;background:linear-gradient(180deg,var(--gold-hi),var(--gold) 55%,var(--gold-lo));color:#000;font-style:italic}
+  .guarantee p{margin:0}
+  .rules{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+  .rules li{display:grid;grid-template-columns:28px 1fr;gap:10px;font-size:15.5px;color:var(--muted)}
+  .rules li strong{color:var(--fg)}
+  .rules .n{width:28px;height:28px;border-radius:8px;border:1.5px solid var(--gold);display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:14px;color:var(--gold)}
+  .warn{padding:14px 16px;border-radius:12px;background:rgba(255,107,87,.08);border:1px solid rgba(255,107,87,.45);font-size:15px;color:#FFD4CC}
+  .warn strong{color:#fff}
+
+  .fit{display:grid;grid-template-columns:1fr;gap:16px}
+  .fit .card{padding:20px 18px;display:flex;flex-direction:column;gap:12px}
+  .fit h3{font-size:19px;display:flex;align-items:center;gap:10px}
+  .fit ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+  .fit li{display:grid;grid-template-columns:22px 1fr;gap:10px;font-size:15.5px;color:var(--muted)}
+  .fit li svg{margin-top:3px}
+  .card.no{border-color:rgba(255,107,87,.4);background:linear-gradient(180deg,#160D0B,#0D0908)}
+  .card.no h3{color:#FFB3A7}
+
+  .quotes{display:flex;flex-direction:column;gap:14px}
+  .quote{padding:18px;margin:0;display:flex;flex-direction:column;gap:10px}
+  .quote p{margin:0;font-size:16px}
+  .quote footer{font-size:14px;color:var(--soft)}
+  .quote footer b{color:var(--fg)}
+
+  /* formulário */
+  .apply{padding:26px 18px;display:flex;flex-direction:column;gap:22px;scroll-margin-top:16px}
+  .progress{display:flex;flex-direction:column;gap:8px}
+  .progress .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden}
+  .progress .bar i{display:block;height:100%;width:33%;background:linear-gradient(90deg,var(--gold-lo),var(--gold-hi));transition:width .3s}
+  .progress .t{display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--soft);letter-spacing:.04em;text-transform:uppercase}
+  #form{display:flex;flex-direction:column;gap:24px}
+  fieldset{border:0;margin:0;padding:0;min-width:0;display:flex;flex-direction:column;gap:26px}
+  legend{padding:0;margin:0 0 4px;font-family:var(--display);font-weight:900;text-transform:uppercase;font-size:22px;line-height:1.1}
+  .q{display:flex;flex-direction:column;gap:10px}
+  .q > .ql{font-weight:700;font-size:16px}
+  .q > .ql small{display:block;font-weight:400;font-size:14px;color:var(--soft);margin-top:2px}
+  .opts{display:grid;grid-template-columns:1fr;gap:8px}
+  .opts.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .opt{position:relative;display:block;cursor:pointer}
+  .opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+  .opt span{display:flex;align-items:center;gap:10px;min-height:52px;padding:12px 14px;border-radius:12px;border:1.5px solid var(--line-soft);background:#0A0A09;font-size:15.5px;line-height:1.3;transition:border-color .12s,background .12s}
+  .opt span::before{content:"";flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #6B665C;box-sizing:border-box;transition:all .12s}
+  .opt:hover span{border-color:rgba(255,194,26,.55)}
+  .opt input:checked + span{border-color:var(--gold);background:rgba(255,194,26,.09)}
+  .opt input:checked + span::before{border:5px solid var(--gold);background:#000}
+  .opt input:focus-visible + span{outline:3px solid #fff;outline-offset:2px}
+  .q.bad .opt span{border-color:rgba(255,107,87,.7)}
   .field{display:flex;flex-direction:column;gap:8px}
-  label{font-size:15px;font-weight:600}
-  label small{font-size:inherit;font-weight:400;color:var(--soft)}
-  input{width:100%;height:56px;padding:0 16px;background:var(--field);color:var(--fg);border:1px solid var(--line);border-radius:4px;font:inherit;font-size:17px;outline:none;transition:border-color .15s,box-shadow .15s}
-  input:focus{border-color:var(--fg);box-shadow:0 0 0 3px rgba(255,255,255,.18)}
-  input[aria-invalid="true"]{border-color:var(--error-line)}
-  input[aria-invalid="true"]:focus{box-shadow:0 0 0 3px rgba(255,107,87,.25)}
+  .field label{font-weight:700;font-size:15px}
+  .field label small{font-weight:400;color:var(--soft)}
+  .field input{width:100%;height:56px;padding:0 16px;border-radius:12px;border:1.5px solid var(--line-soft);background:#0A0A09;color:var(--fg);font:inherit;font-size:17px;outline:none;transition:border-color .12s,box-shadow .12s}
+  .field input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,194,26,.22)}
+  .field input[aria-invalid="true"]{border-color:var(--error-line)}
+  .field input[aria-invalid="true"]:focus{box-shadow:0 0 0 3px rgba(255,107,87,.25)}
+  .pre{position:relative}
+  .pre b{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--soft);font-weight:600;pointer-events:none}
+  .pre input{padding-left:34px}
+  .agree{display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;padding:14px;border-radius:12px;border:1.5px solid var(--line-soft);cursor:pointer;font-size:15px;color:var(--muted)}
+  .agree input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--gold);cursor:pointer}
+  .agree strong{color:var(--fg)}
+  .agree.bad{border-color:var(--error-line)}
   .err{display:none;gap:8px;align-items:flex-start;font-size:14px;line-height:1.4;color:var(--error)}
   .err.on{display:flex}
   .err svg{flex:none;margin-top:1px}
+  .nav{display:flex;flex-direction:column;gap:12px}
+  .nav .ghost{align-self:center}
+  .alert{display:none;margin:0;padding:14px 16px;border:1px solid var(--error-line);border-radius:12px;font-size:15px;color:var(--error)}
+  .alert.on{display:block}
   .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 
-  .btn{height:60px;width:100%;margin-top:8px;border:0;border-radius:4px;background:var(--fg);color:#000;font:inherit;font-size:17px;font-weight:700;letter-spacing:.2px;cursor:pointer;transition:background .15s}
-  .btn:hover{background:var(--accent)}
-  .btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-  .btn[disabled]{opacity:.6;cursor:progress}
-  .alert{display:none;margin:0;padding:14px 16px;border:1px solid var(--error-line);border-radius:4px;font-size:15px;color:var(--error)}
-  .alert.on{display:block}
+  .result{display:none;flex-direction:column;gap:18px;text-align:center;align-items:center}
+  .result.on{display:flex}
+  .result h3{font-size:clamp(26px,7.6vw,34px)}
+  .result p{margin:0;color:var(--muted);font-size:16.5px}
+  .result p strong{color:var(--fg)}
+  .stamp{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--gold-hi),var(--gold-lo));color:#000;box-shadow:0 0 40px rgba(255,180,0,.45)}
+  .stamp.muted{background:#1D1B17;color:var(--gold);box-shadow:none;border:1.5px solid var(--line)}
 
-  .ok{display:none;flex-direction:column;align-items:center;gap:20px;text-align:center;padding:36px 24px;border:1px solid #333;border-radius:4px}
-  .ok.on{display:flex}
-  .ok h2{margin:0;font-family:'Pirata One',serif;font-weight:400;font-size:40px;line-height:1.05}
-  .ok p{margin:0;font-size:16px;color:var(--muted)}
-  .code{width:100%;padding:18px 16px;border:1px dashed var(--accent);border-radius:4px;font-size:22px;font-weight:700;letter-spacing:2px;color:var(--accent);word-break:break-all;user-select:all}
-  .copy{height:48px;padding:0 24px;border:1px solid var(--fg);border-radius:4px;background:transparent;color:var(--fg);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
-  .copy:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  /* FAQ */
+  .faq{display:flex;flex-direction:column;gap:10px}
+  .faq details{border:1px solid var(--line-soft);border-radius:12px;background:var(--panel)}
+  .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:16px 18px;font-weight:700;font-size:16px}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";flex:none;font-family:var(--display);font-weight:900;font-size:22px;color:var(--gold);line-height:1}
+  .faq details[open] summary::after{content:"–"}
+  .faq summary:focus-visible{outline:3px solid #fff;outline-offset:2px;border-radius:12px}
+  .faq p{margin:0;padding:0 18px 18px;color:var(--muted);font-size:15.5px}
 
-  footer{text-align:center;font-size:13px;color:#8F8F8F;letter-spacing:.4px}
+  footer.site{padding-block:24px calc(110px + env(safe-area-inset-bottom,0px));text-align:center;font-size:13px;color:var(--soft);display:flex;flex-direction:column;gap:10px}
+  footer.site img{width:96px;margin:0 auto;border-radius:6px;opacity:.9}
+
+  /* barra fixa de CTA no celular */
+  .sticky{position:fixed;left:0;right:0;bottom:0;z-index:20;padding:12px max(16px,env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));
+    background:linear-gradient(180deg,rgba(5,5,5,0),rgba(5,5,5,.92) 30%);transform:translateY(110%);transition:transform .25s}
+  .sticky.on{transform:none}
+  .sticky .btn{max-width:520px;margin:0 auto;min-height:56px;font-size:16px}
+
+  @media (min-width:720px){
+    .fit{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .wrap{max-width:620px}
+    .photo{margin-inline:0;border-radius:var(--r);overflow:hidden}
+  }
   [hidden]{display:none!important}
-  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
+
 <div class="wrap">
-<main>
-  <header class="logos">
-    <div class="logo logo--elite"><img src="assets/logo-tatuador-de-elite.png" alt="Tatuador de Elite" width="133" height="53"></div>
-    <span class="x" aria-hidden="true">×</span>
-    <div class="logo"><img src="assets/logo-arromba.png" alt="Arromba Tattoo Shop" width="1448" height="1086"></div>
+  <header class="top">
+    <img src="assets/logo-tatuador-de-elite.png" alt="Tatuador de Elite" width="133" height="53">
+    <span class="badge" id="badge" hidden><i aria-hidden="true"></i><span id="badge-txt"></span></span>
   </header>
 
-  <section class="hero">
-    <svg aria-hidden="true" width="132" height="14" viewBox="0 0 132 14" fill="none" stroke="#5C5C5C"><line x1="0" y1="7" x2="54" y2="7"/><path d="M66 1 69 7 66 13 63 7Z" fill="#5C5C5C"/><line x1="78" y1="7" x2="132" y2="7"/></svg>
-    <h1>Seu próximo traço com <span>10% OFF.</span></h1>
-    <p class="sub">Cadastre-se e garanta seu cupom de 10% de desconto com a Romba Tattoo.</p>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="h-hero">
+    <p class="kicker">Marketing para <span class="gold">tatuadores</span></p>
+
+    <div class="photo">
+      <img src="assets/equipe.jpg" alt="Equipe Tatuador de Elite com as bandeiras do Brasil, dos Estados Unidos e da União Europeia" width="732" height="440" fetchpriority="high">
+    </div>
+
+    <h1 class="promise" id="h-hero">
+      <span class="l1">Resultados em</span>
+      <span class="pill45">45 dias</span>
+      <span class="l3">ou o seu <span class="gold">dinheiro de volta.</span></span>
+    </h1>
+
+    <div class="rule" aria-hidden="true"></div>
+
+    <p class="lede">Uma equipe de <strong>3 profissionais</strong> assume seu tráfego pago, seus criativos, seu Instagram e seu processo de vendas. <strong>Você tatua. A gente traz cliente.</strong></p>
+
+    <div class="filter">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5h18l-7 8v6l-4 2v-8z"/></svg>
+      <span><strong>Não é para todo mundo.</strong> Só entram tatuadores aprovados na aplicação, porque a garantia só funciona com quem faz a sua parte.</span>
+    </div>
+
+    <div class="countdown" id="countdown" hidden aria-live="off"><span>Aplicações encerram em</span><b id="cd"></b></div>
+
+    <a class="btn" href="#aplicar" id="cta-hero">
+      Quero aplicar para uma vaga
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <p class="micro">Aplicação em 60 segundos · Resposta pelo WhatsApp</p>
+
+    <div class="regions" aria-label="Onde atendemos"><span>Brasil</span><span>Estados Unidos</span><span>Europa</span></div>
   </section>
 
-  <form id="form" novalidate aria-label="Cadastro para cupom">
-    <p class="alert" id="alerta" role="alert"></p>
-
-    <div class="field">
-      <label for="nome">Nome</label>
-      <input id="nome" name="nome" type="text" autocomplete="name" aria-describedby="e-nome" required>
-      <div class="err" id="e-nome" aria-live="polite"></div>
+  <!-- INCLUSO -->
+  <section class="stack" aria-labelledby="h-incluso">
+    <h2 class="tag" id="h-incluso">O que está incluso</h2>
+    <div class="rule" aria-hidden="true"></div>
+    <ul class="list frame">
+      <li><span class="ck"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg>
+        Equipe com 3 profissionais</li>
+      <li><span class="ck"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="9" width="18" height="12" rx="1.5"/><path d="m3 9 2-5 16 0-1 5M8 4l-2 5M13 4l-2 5M18 4l-2 5M10 12.5v5l4-2.5z"/></svg>
+        Edição dos criativos</li>
+      <li><span class="ck"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 21v-5M9 21v-8M14 21v-6M19 21V9M3 12l6-5 4 3 8-7M16 3h5v5"/></svg>
+        Gestão completa de tráfego pago</li>
+      <li><span class="ck"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".9" fill="currentColor"/></svg>
+        Reposicionamento do perfil no Instagram</li>
+      <li><span class="ck"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m2 11 4-4 4 1 3-2 3 1 6 5-4 4M2 11l3 3M8 13l3 3 2-2M10.5 11l3 3 2-2M13 9l3.5 3.5"/></svg>
+        Correção do processo de vendas</li>
+      <li><span class="ck"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></span>
+        <svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M1 20h22M12 6.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7M8.5 10h7M12 6.5c-1.6 2-1.6 5 0 7M12 6.5c1.6 2 1.6 5 0 7"/></svg>
+        Estrutura de site ou landing page</li>
+    </ul>
+    <div class="bonus frame">
+      <b><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="1"/><path d="M12 8v13M3 12h18M12 8S10.5 3 7.5 4 9 8 12 8M12 8s1.5-5 4.5-4S15 8 12 8"/></svg>Bônus</b>
+      <p><strong>Acesso gratuito</strong> a uma ferramenta de gestão e organização de estúdio de tatuagem.</p>
     </div>
-
-    <div class="field">
-      <label for="telefone">Telefone com DDD <small>· ex.: (31) 99999-9999</small></label>
-      <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="15" aria-describedby="e-telefone" required>
-      <div class="err" id="e-telefone" aria-live="polite"></div>
-    </div>
-
-    <div class="field">
-      <label for="email">E-mail</label>
-      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="e-email" required>
-      <div class="err" id="e-email" aria-live="polite"></div>
-    </div>
-
-    <div class="hp" aria-hidden="true"><label for="empresa">Não preencha</label><input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off"></div>
-
-    <button class="btn" id="btn" type="submit">Quero meu cupom de 10%</button>
-  </form>
-
-  <section class="ok" id="ok" role="status" tabindex="-1">
-    <h2 id="ok-titulo">Cupom garantido.</h2>
-    <p id="ok-texto"></p>
-    <div class="code" id="codigo" hidden></div>
-    <button class="copy" id="copiar" type="button" hidden>Copiar código</button>
   </section>
 
-  <footer>Tatuador de Elite × Romba Tattoo</footer>
-</main>
+  <!-- FATURAMENTO -->
+  <section class="stack" aria-labelledby="h-money">
+    <div class="money" id="h-money">
+      <span class="s">Tatuadores faturam entre</span>
+      <span class="n"><small>R$</small><span class="gold">15.000</span></span>
+      <span class="n"><small>A R$</small><span class="gold">35.000</span></span>
+      <span class="e">ou mais por mês</span>
+      <span class="m">seguindo a <span class="gold">nossa</span> metodologia.</span>
+    </div>
+    <p class="disc"><strong>Leia antes de aplicar:</strong> não prometemos nenhum valor de faturamento. Esses números são de tatuadores que aplicaram a metodologia. O seu resultado depende do seu trabalho, da sua região, do seu preço e do seu investimento em anúncios. A garantia é de resultado em 45 dias, e não de um valor.</p>
+    <a class="btn" href="#aplicar">Quero ser o próximo</a>
+  </section>
+
+  <!-- GARANTIA -->
+  <section aria-labelledby="h-gar">
+    <div class="guarantee frame">
+      <h2 class="gtitle" id="h-gar">Garantia de <span class="p">45 dias</span></h2>
+      <p class="sub">Se você fizer a sua parte e o resultado combinado não acontecer em 45 dias, <strong style="color:var(--fg)">devolvemos o seu dinheiro.</strong> Simples assim.</p>
+      <div class="rule" aria-hidden="true"></div>
+      <p style="font-weight:700">A garantia é real e, por isso, tem regras. Ela vale só para quem:</p>
+      <!-- CONFIRMAR: estas regras precisam ser IGUAIS às do contrato. -->
+      <ol class="rules">
+        <li><span class="n">1</span><span><strong>Investe em anúncios</strong> a verba mínima definida no contrato, todos os meses do período.</span></li>
+        <li><span class="n">2</span><span><strong>Responde os contatos</strong> que chegam pelos anúncios dentro do prazo combinado.</span></li>
+        <li><span class="n">3</span><span><strong>Envia fotos e vídeos</strong> dos trabalhos e aprova os criativos nos prazos.</span></li>
+        <li><span class="n">4</span><span><strong>Segue o processo de vendas</strong> que implantamos e registra os atendimentos.</span></li>
+        <li><span class="n">5</span><span><strong>Participa das reuniões</strong> de acompanhamento.</span></li>
+      </ol>
+      <p class="disc">O que conta como <strong>resultado</strong> é definido por escrito no contrato, antes de começar. As regras completas da devolução estão no contrato.</p>
+      <p class="warn"><strong>Recado direto:</strong> se você pensa em fechar só para pedir o dinheiro de volta, nem aplique. Todo o processo é registrado e quem não cumpre as obrigações do contrato não tem direito à garantia.</p>
+    </div>
+  </section>
+
+  <!-- PARA QUEM -->
+  <section class="stack" aria-labelledby="h-fit">
+    <h2 class="h2 center" id="h-fit">Para quem é <span class="gold">(e para quem não é)</span></h2>
+    <div class="fit">
+      <div class="card frame">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.6" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>É para você se</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Já tatua profissionalmente e tem portfólio para mostrar.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Quer agenda cheia de clientes que pagam o seu preço.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Tem verba para investir em anúncios todo mês.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="3" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>Segue processo e responde cliente rápido.</li>
+        </ul>
+      </div>
+      <div class="card frame no">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="2.6" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Não é para você se</h3>
+        <ul>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Está começando agora e ainda não tem portfólio.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Não pode investir em anúncios agora.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Quer resultado sem fazer a sua parte.</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF8A7A" stroke-width="3" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>Está de olho só na devolução do dinheiro.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS (só aparece com depoimentos reais na configuração) -->
+  <section class="stack" id="sec-depo" hidden aria-labelledby="h-depo">
+    <h2 class="h2 center" id="h-depo">Quem já <span class="gold">aplicou</span></h2>
+    <div class="quotes" id="quotes"></div>
+  </section>
+
+  <!-- APLICAÇÃO -->
+  <section aria-labelledby="h-apply">
+    <div class="stack" style="gap:18px;margin-bottom:22px">
+      <h2 class="tag" id="h-apply">Aplique para uma vaga</h2>
+      <p class="sub">Responda com sinceridade. Analisamos cada aplicação e só chamamos quem tem perfil para ter resultado.</p>
+    </div>
+
+    <div class="apply frame" id="aplicar" tabindex="-1">
+      <form id="form" novalidate aria-label="Aplicação Tatuador de Elite">
+        <div class="progress" aria-hidden="true">
+          <div class="t"><span id="p-label">Etapa 1 de 3 · Seu perfil</span><span id="p-pct">33%</span></div>
+          <div class="bar"><i id="p-bar"></i></div>
+        </div>
+
+        <p class="alert" id="alerta" role="alert"></p>
+
+        <!-- ETAPA 1 -->
+        <fieldset data-step="1">
+          <legend tabindex="-1">Seu perfil</legend>
+
+          <div class="q" data-q="perfil">
+            <span class="ql" id="l-perfil">Qual dessas te descreve?</span>
+            <div class="opts" role="radiogroup" aria-labelledby="l-perfil" aria-describedby="e-perfil">
+              <label class="opt"><input type="radio" name="perfil" value="estudio-proprio"><span>Tatuador com estúdio próprio</span></label>
+              <label class="opt"><input type="radio" name="perfil" value="dono-com-equipe"><span>Dono de estúdio com equipe de tatuadores</span></label>
+              <label class="opt"><input type="radio" name="perfil" value="residente"><span>Tatuo em estúdio de outra pessoa</span></label>
+              <label class="opt"><input type="radio" name="perfil" value="iniciante"><span>Ainda não tatuo profissionalmente</span></label>
+            </div>
+            <div class="err" id="e-perfil"></div>
+          </div>
+
+          <div class="q" data-q="tempo">
+            <span class="ql" id="l-tempo">Há quanto tempo você tatua profissionalmente?</span>
+            <div class="opts two" role="radiogroup" aria-labelledby="l-tempo" aria-describedby="e-tempo">
+              <label class="opt"><input type="radio" name="tempo" value="menos-1-ano"><span>Menos de 1 ano</span></label>
+              <label class="opt"><input type="radio" name="tempo" value="1-3-anos"><span>1 a 3 anos</span></label>
+              <label class="opt"><input type="radio" name="tempo" value="3-5-anos"><span>3 a 5 anos</span></label>
+              <label class="opt"><input type="radio" name="tempo" value="5-anos-ou-mais"><span>5 anos ou mais</span></label>
+            </div>
+            <div class="err" id="e-tempo"></div>
+          </div>
+
+          <div class="q" data-q="regiao">
+            <span class="ql" id="l-regiao">Onde você atende?</span>
+            <div class="opts two" role="radiogroup" aria-labelledby="l-regiao" aria-describedby="e-regiao">
+              <label class="opt"><input type="radio" name="regiao" value="brasil"><span>Brasil</span></label>
+              <label class="opt"><input type="radio" name="regiao" value="estados-unidos"><span>Estados Unidos</span></label>
+              <label class="opt"><input type="radio" name="regiao" value="europa"><span>Europa</span></label>
+              <label class="opt"><input type="radio" name="regiao" value="outro"><span>Outro país</span></label>
+            </div>
+            <div class="err" id="e-regiao"></div>
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 2 -->
+        <fieldset data-step="2" hidden>
+          <legend tabindex="-1">Seu momento</legend>
+
+          <div class="q" data-q="faturamento">
+            <span class="ql" id="l-fat">Quanto você fatura por mês com tatuagem hoje?<small>Fora do Brasil, considere o valor equivalente.</small></span>
+            <div class="opts two" role="radiogroup" aria-labelledby="l-fat" aria-describedby="e-faturamento">
+              <label class="opt"><input type="radio" name="faturamento" value="ate-5mil"><span>Até R$ 5 mil</span></label>
+              <label class="opt"><input type="radio" name="faturamento" value="5-10mil"><span>R$ 5 a 10 mil</span></label>
+              <label class="opt"><input type="radio" name="faturamento" value="10-20mil"><span>R$ 10 a 20 mil</span></label>
+              <label class="opt"><input type="radio" name="faturamento" value="20mil-mais"><span>Mais de R$ 20 mil</span></label>
+            </div>
+            <div class="err" id="e-faturamento"></div>
+          </div>
+
+          <div class="q" data-q="verba">
+            <span class="ql" id="l-verba">Quanto pode investir por mês em anúncios?<small>Verba paga direto às plataformas, além do serviço.</small></span>
+            <div class="opts" role="radiogroup" aria-labelledby="l-verba" aria-describedby="e-verba">
+              <label class="opt"><input type="radio" name="verba" value="nao-posso"><span>Não posso investir agora</span></label>
+              <label class="opt"><input type="radio" name="verba" value="ate-1mil"><span>Até R$ 1.000</span></label>
+              <label class="opt"><input type="radio" name="verba" value="1-3mil"><span>De R$ 1.000 a R$ 3.000</span></label>
+              <label class="opt"><input type="radio" name="verba" value="3mil-mais"><span>Mais de R$ 3.000</span></label>
+            </div>
+            <div class="err" id="e-verba"></div>
+          </div>
+
+          <div class="q" data-q="inicio">
+            <span class="ql" id="l-inicio">Quando você quer começar?</span>
+            <div class="opts" role="radiogroup" aria-labelledby="l-inicio" aria-describedby="e-inicio">
+              <label class="opt"><input type="radio" name="inicio" value="imediato"><span>Agora, o quanto antes</span></label>
+              <label class="opt"><input type="radio" name="inicio" value="30-dias"><span>Nos próximos 30 dias</span></label>
+              <label class="opt"><input type="radio" name="inicio" value="pesquisando"><span>Só estou pesquisando</span></label>
+            </div>
+            <div class="err" id="e-inicio"></div>
+          </div>
+        </fieldset>
+
+        <!-- ETAPA 3 -->
+        <fieldset data-step="3" hidden>
+          <legend tabindex="-1">Seu contato</legend>
+
+          <div class="field">
+            <label for="nome">Nome completo</label>
+            <input id="nome" name="nome" type="text" autocomplete="name" aria-describedby="e-nome">
+            <div class="err" id="e-nome"></div>
+          </div>
+
+          <div class="field">
+            <label for="whatsapp" id="l-whats">WhatsApp com DDD <small id="whats-hint">· ex.: (31) 99999-9999</small></label>
+            <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="e-whatsapp">
+            <div class="err" id="e-whatsapp"></div>
+          </div>
+
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="e-email">
+            <div class="err" id="e-email"></div>
+          </div>
+
+          <div class="field">
+            <label for="instagram">Instagram do seu trabalho</label>
+            <div class="pre"><b aria-hidden="true">@</b><input id="instagram" name="instagram" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" aria-describedby="e-instagram"></div>
+            <div class="err" id="e-instagram"></div>
+          </div>
+
+          <div>
+            <label class="agree" id="agree-box" for="compromisso">
+              <input id="compromisso" name="compromisso" type="checkbox" aria-describedby="e-compromisso">
+              <span>Li as <strong>regras da garantia</strong> e me comprometo a cumprir a minha parte: investir em anúncios, responder os clientes e seguir o processo.</span>
+            </label>
+            <div class="err" id="e-compromisso" style="margin-top:8px"></div>
+          </div>
+
+          <div class="hp" aria-hidden="true"><label for="empresa">Não preencha</label><input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off"></div>
+        </fieldset>
+
+        <div class="nav">
+          <button class="btn" type="submit" id="btn">Continuar
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <button class="ghost" type="button" id="voltar" hidden>Voltar</button>
+        </div>
+        <p class="micro" style="font-size:13px">Seus dados são usados só para analisar a aplicação e falar com você.</p>
+      </form>
+
+      <!-- RESULTADOS -->
+      <div class="result" id="res-ok" role="status" tabindex="-1">
+        <div class="stamp"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></div>
+        <h3 id="ok-title">Aplicação recebida</h3>
+        <p id="ok-text"></p>
+        <p id="ok-estande" hidden></p>
+        <a class="btn" id="ok-whats" href="#" target="_blank" rel="noopener" hidden>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>
+          Falar com a equipe agora
+        </a>
+      </div>
+
+      <div class="result" id="res-fora" role="status" tabindex="-1">
+        <div class="stamp muted"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16.5v.5"/></svg></div>
+        <h3>Obrigado pela aplicação</h3>
+        <p id="fora-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="stack" aria-labelledby="h-faq">
+    <h2 class="h2 center" id="h-faq">Perguntas <span class="gold">diretas</span></h2>
+    <div class="faq">
+      <details><summary>Vocês garantem que vou faturar R$ 15 mil?</summary>
+        <p>Não. Nenhum valor de faturamento é prometido. Os números da página são de tatuadores que seguiram a metodologia. A garantia é de resultado em 45 dias, com o critério de resultado definido por escrito no contrato.</p></details>
+      <details><summary>Como funciona a devolução?</summary>
+        <!-- CONFIRMAR com o contrato -->
+        <p>Se você cumpriu todas as obrigações do contrato e o resultado combinado não aconteceu em 45 dias, você pede a devolução do valor pago pelo serviço. Quem não cumpriu a própria parte não tem direito à garantia.</p></details>
+      <details><summary>A verba dos anúncios está inclusa?</summary>
+        <!-- CONFIRMAR -->
+        <p>Não. A verba é paga direto às plataformas de anúncio e fica no seu nome. A nossa equipe faz toda a gestão.</p></details>
+      <details><summary>Atendo fora do Brasil. Serve para mim?</summary>
+        <p>Sim. Atendemos tatuadores no Brasil, nos Estados Unidos e na Europa.</p></details>
+      <details><summary>Quanto custa?</summary>
+        <!-- CONFIRMAR -->
+        <p>O valor é apresentado na conversa com a equipe, depois que a sua aplicação é aprovada.</p></details>
+    </div>
+    <a class="btn" href="#aplicar">Aplicar agora</a>
+  </section>
+
+  <footer class="site">
+    <img src="assets/logo-tatuador-de-elite.png" alt="Tatuador de Elite" width="133" height="53">
+    <span>Marketing para tatuadores</span>
+    <span>Resultados variam de pessoa para pessoa. A garantia segue as condições do contrato.</span>
+  </footer>
+</div>
+
+<div class="sticky" id="sticky" aria-hidden="true">
+  <a class="btn" href="#aplicar" tabindex="-1">Aplicar para uma vaga</a>
 </div>
 
 <script>
 (function () {
-  var C = window.CADASTRO_CONFIG || {};
+  var C = window.LP_CONFIG || {};
   var $ = function (id) { return document.getElementById(id); };
-  var form = $('form'), btn = $('btn'), alerta = $('alerta');
-  var campos = { nome: $('nome'), telefone: $('telefone'), email: $('email') };
-  var tocado = {}, tentou = false, enviando = false;
   var ICONE = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="4.5" x2="8" y2="8.5"/><circle cx="8" cy="11" r=".6" fill="currentColor"/></svg>';
 
-  function digitos(v) { return (v || '').replace(/\D/g, ''); }
-  function mascara(v) {
+  /* ---------- rastreio de origem (?origem=estande | panfleto | utm_*) ---------- */
+  var qs = new URLSearchParams(location.search);
+  var rastreio = { origem: qs.get('origem') || qs.get('utm_source') || 'direto' };
+  ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (k) { if (qs.get(k)) rastreio[k] = qs.get(k); });
+
+  /* ---------- selo do evento + contagem regressiva real ---------- */
+  if (C.evento) { $('badge-txt').textContent = C.evento; $('badge').hidden = false; }
+  var fim = C.prazoAplicacoes ? new Date(C.prazoAplicacoes).getTime() : NaN;
+  if (fim && fim > Date.now()) {
+    $('countdown').hidden = false;
+    var tick = function () {
+      var s = Math.max(0, Math.floor((fim - Date.now()) / 1000));
+      var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+      var p = function (n) { return String(n).padStart(2, '0'); };
+      $('cd').textContent = (d ? d + 'd ' : '') + p(h) + 'h ' + p(m) + 'm ' + p(x) + 's';
+      if (!s) { $('countdown').hidden = true; clearInterval(t); }
+    };
+    tick(); var t = setInterval(tick, 1000);
+  }
+
+  /* ---------- depoimentos reais ---------- */
+  var dep = Array.isArray(C.depoimentos) ? C.depoimentos.filter(function (d) { return d && d.texto && d.nome; }) : [];
+  if (dep.length) {
+    dep.forEach(function (d) {
+      var f = document.createElement('figure'); f.className = 'quote frame';
+      var p = document.createElement('p'); p.textContent = '“' + d.texto + '”';
+      var ft = document.createElement('footer'); var b = document.createElement('b'); b.textContent = d.nome; ft.appendChild(b);
+      if (d.detalhe) ft.appendChild(document.createTextNode(' · ' + d.detalhe));
+      f.appendChild(p); f.appendChild(ft); $('quotes').appendChild(f);
+    });
+    $('sec-depo').hidden = false;
+  }
+
+  /* ---------- barra fixa de CTA ---------- */
+  if ('IntersectionObserver' in window) {
+    var vis = { hero: true, form: false };
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { vis[e.target === $('cta-hero') ? 'hero' : 'form'] = e.isIntersecting; });
+      $('sticky').classList.toggle('on', !vis.hero && !vis.form);
+    });
+    io.observe($('cta-hero')); io.observe($('aplicar'));
+  }
+
+  /* ---------- formulário em etapas ---------- */
+  var form = $('form'), btn = $('btn'), voltar = $('voltar'), alerta = $('alerta');
+  var etapas = form.querySelectorAll('fieldset');
+  var NOMES = ['Seu perfil', 'Seu momento', 'Seu contato'];
+  var etapa = 1, enviando = false, tentou = {};
+
+  var radio = function (n) { var r = form.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; };
+  var digitos = function (v) { return (v || '').replace(/\D/g, ''); };
+  var brasil = function () { var r = radio('regiao'); return !r || r === 'brasil'; };
+
+  function mascaraBR(v) {
     var d = digitos(v).slice(0, 11);
     if (!d) return '';
     if (d.length <= 2) return '(' + d;
@@ -180,12 +661,16 @@ window.CADASTRO_CONFIG = {
       if (n.length < 3 || n.split(' ').length < 2) return 'Informe nome e sobrenome.';
       return '';
     },
-    telefone: function (v) {
+    whatsapp: function (v) {
       var d = digitos(v);
-      if (!d) return 'Informe seu telefone com DDD.';
-      if (d.length < 10) return 'Telefone incompleto. Use DDD + número.';
-      if (d[0] === '0' || d[1] === '0') return 'DDD inválido. Confira os dois primeiros dígitos.';
-      if (d.length === 11 && d[2] !== '9') return 'Celular com 11 dígitos deve ter 9 após o DDD.';
+      if (!d) return 'Informe seu WhatsApp.';
+      if (brasil()) {
+        if (d.length < 10) return 'Número incompleto. Use DDD + número.';
+        if (d[0] === '0' || d[1] === '0') return 'DDD inválido. Confira os dois primeiros dígitos.';
+        if (d.length === 11 && d[2] !== '9') return 'Celular com 11 dígitos deve ter 9 depois do DDD.';
+        return '';
+      }
+      if (d.length < 8 || d.length > 15) return 'Informe o número com o código do país. Ex.: +1 555 123 4567';
       return '';
     },
     email: function (v) {
@@ -193,92 +678,185 @@ window.CADASTRO_CONFIG = {
       if (!m) return 'Informe seu e-mail.';
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)) return 'E-mail inválido. Ex.: nome@email.com';
       return '';
+    },
+    instagram: function (v) {
+      var h = v.trim().replace(/^@+/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[\/?].*$/, '');
+      if (!h) return 'Informe o @ do Instagram onde você mostra seu trabalho.';
+      if (!/^[A-Za-z0-9._]{1,30}$/.test(h)) return 'Use só letras, números, ponto e sublinhado. Ex.: @seu.estudio';
+      return '';
     }
   };
 
-  function mostrar(k) {
-    var msg = (tentou || tocado[k]) ? regras[k](campos[k].value) : '';
-    var box = $('e-' + k);
-    campos[k].setAttribute('aria-invalid', msg ? 'true' : 'false');
+  function erro(id, msg) {
+    var box = $('e-' + id);
     box.innerHTML = msg ? ICONE + '<span></span>' : '';
     if (msg) box.querySelector('span').textContent = msg;
     box.classList.toggle('on', !!msg);
-    return msg;
   }
+  function checaCampo(id) {
+    var el = $(id), msg = regras[id](el.value);
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    erro(id, msg); return msg;
+  }
+  function checaRadio(n) {
+    var msg = radio(n) ? '' : 'Escolha uma opção.';
+    form.querySelector('[data-q="' + n + '"]').classList.toggle('bad', !!msg);
+    erro(n, msg); return msg;
+  }
+  function checaCompromisso() {
+    var msg = $('compromisso').checked ? '' : 'Para aplicar, você precisa concordar com as regras da garantia.';
+    $('agree-box').classList.toggle('bad', !!msg);
+    erro('compromisso', msg); return msg;
+  }
+
+  var porEtapa = {
+    1: ['perfil', 'tempo', 'regiao'],
+    2: ['faturamento', 'verba', 'inicio'],
+    3: ['nome', 'whatsapp', 'email', 'instagram', 'compromisso']
+  };
+  function validaEtapa(n) {
+    var primeiro = null;
+    porEtapa[n].forEach(function (k) {
+      var msg = regras[k] ? checaCampo(k) : (k === 'compromisso' ? checaCompromisso() : checaRadio(k));
+      if (msg && !primeiro) primeiro = k;
+    });
+    return primeiro;
+  }
+  function foca(k) {
+    var el = regras[k] ? $(k) : (k === 'compromisso' ? $('compromisso') : form.querySelector('input[name="' + k + '"]'));
+    if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  }
+
+  function mostraEtapa(n, focar) {
+    etapa = n;
+    etapas.forEach(function (f) { f.hidden = +f.dataset.step !== n; });
+    $('p-label').textContent = 'Etapa ' + n + ' de 3 · ' + NOMES[n - 1];
+    $('p-pct').textContent = Math.round(n / 3 * 100) + '%';
+    $('p-bar').style.width = (n / 3 * 100) + '%';
+    voltar.hidden = n === 1;
+    btn.firstChild.nodeValue = n === 3 ? 'Enviar minha aplicação ' : 'Continuar ';
+    if (focar) {
+      $('aplicar').scrollIntoView({ block: 'start', behavior: 'smooth' });
+      var lg = etapas[n - 1].querySelector('legend'); lg.focus({ preventScroll: true });
+    }
+  }
+
+  // marcou uma opção: limpa o erro dela
+  form.addEventListener('change', function (e) {
+    var n = e.target.name;
+    if (porEtapa[1].concat(porEtapa[2]).indexOf(n) >= 0 && tentou[etapa]) checaRadio(n);
+    if (n === 'compromisso' && tentou[3]) checaCompromisso();
+    if (n === 'regiao') ajustaTelefone();
+    aviso('');
+  });
+  function ajustaTelefone() {
+    var br = brasil(), el = $('whatsapp');
+    $('whats-hint').textContent = br ? '· ex.: (31) 99999-9999' : '· com código do país, ex.: +1 555 123 4567';
+    el.value = br ? mascaraBR(el.value) : el.value.replace(/[^\d+\s()-]/g, '');
+  }
+  $('whatsapp').addEventListener('input', function () {
+    if (!brasil()) { this.value = this.value.replace(/[^\d+\s()-]/g, ''); return; }
+    var fimCursor = this.selectionStart === this.value.length;
+    this.value = mascaraBR(this.value);
+    if (fimCursor) this.setSelectionRange(this.value.length, this.value.length);
+  });
+  Object.keys(regras).forEach(function (k) {
+    $(k).addEventListener('blur', function () { if (this.value || tentou[3]) checaCampo(k); });
+    $(k).addEventListener('input', function () { if (this.getAttribute('aria-invalid') === 'true') checaCampo(k); aviso(''); });
+  });
+  voltar.addEventListener('click', function () { mostraEtapa(etapa - 1, true); });
+
   function aviso(t) { alerta.textContent = t || ''; alerta.classList.toggle('on', !!t); }
 
-  campos.telefone.addEventListener('input', function () {
-    var el = this, fim = el.selectionStart === el.value.length;
-    el.value = mascara(el.value);
-    if (fim) el.setSelectionRange(el.value.length, el.value.length);
-  });
-  Object.keys(campos).forEach(function (k) {
-    campos[k].addEventListener('blur', function () { if (this.value) tocado[k] = true; mostrar(k); });
-    campos[k].addEventListener('input', function () { if (tocado[k] || tentou) mostrar(k); aviso(''); });
-  });
-
-  function configOk() {
-    if (!C.endpoint) return 'endpoint vazio';
-    var modo = C.cupom && C.cupom.modo;
-    if (['resposta', 'fixo', 'email'].indexOf(modo) < 0) return 'cupom.modo inválido';
-    if (modo === 'fixo' && !(C.cupom.codigoFixo || '').trim()) return 'cupom.codigoFixo vazio';
-    return '';
+  /* ---------- qualificação ---------- */
+  function qualifica() {
+    var pts = {
+      perfil: { 'estudio-proprio': 3, 'dono-com-equipe': 3, 'residente': 2, 'iniciante': 0 },
+      tempo: { 'menos-1-ano': 0, '1-3-anos': 1, '3-5-anos': 2, '5-anos-ou-mais': 3 },
+      faturamento: { 'ate-5mil': 0, '5-10mil': 1, '10-20mil': 2, '20mil-mais': 3 },
+      verba: { 'nao-posso': 0, 'ate-1mil': 1, '1-3mil': 2, '3mil-mais': 3 },
+      inicio: { 'imediato': 3, '30-dias': 2, 'pesquisando': 0 }
+    };
+    var score = 0;
+    Object.keys(pts).forEach(function (k) { score += pts[k][radio(k)] || 0; });
+    var motivos = [];
+    if (radio('perfil') === 'iniciante') motivos.push('nao-tatua-profissionalmente');
+    if (radio('verba') === 'nao-posso') motivos.push('sem-verba-para-anuncios');
+    var temperatura = motivos.length ? 'desqualificado'
+      : (score >= 11 && radio('inicio') !== 'pesquisando') ? 'quente'
+      : score >= 7 ? 'morno' : 'frio';
+    return { pontuacao: score, temperatura: temperatura, qualificado: !motivos.length, motivos_desqualificacao: motivos.join(',') };
   }
 
+  /* ---------- envio ---------- */
   function corpo(dados) {
     if (C.formato === 'form') return { body: new URLSearchParams(dados).toString(), type: 'application/x-www-form-urlencoded;charset=UTF-8' };
     if (C.formato === 'json-texto') return { body: JSON.stringify(dados), type: 'text/plain;charset=UTF-8' };
     return { body: JSON.stringify(dados), type: 'application/json' };
   }
 
-  function sucesso(codigo, email) {
+  function resultado(q, dados) {
     form.hidden = true;
-    var ok = $('ok'), txt = $('ok-texto'), cod = $('codigo'), cp = $('copiar');
-    if (codigo) {
-      txt.textContent = 'Use este código ao agendar com a Romba Tattoo.';
-      cod.textContent = codigo; cod.hidden = false; cp.hidden = false;
-      cp.onclick = function () {
-        var feito = function () { cp.textContent = 'Código copiado'; };
-        if (navigator.clipboard) navigator.clipboard.writeText(codigo).then(feito, function () {});
-      };
-    } else if (C.cupom.modo === 'email') {
-      txt.textContent = 'Enviamos seu cupom para ' + email + '. Confira também a caixa de spam.';
-    } else {
-      $('ok-titulo').textContent = 'Cadastro confirmado.';
-      txt.textContent = 'Não conseguimos exibir seu cupom agora. Fale com a Romba Tattoo informando seu e-mail cadastrado.';
+    var primeiroNome = dados.nome.split(' ')[0];
+    if (!q.qualificado) {
+      $('fora-text').textContent = primeiroNome + ', neste momento o programa é só para tatuadores que já atendem profissionalmente e podem investir em anúncios todo mês. Guardamos sua aplicação e, quando fizer sentido, falamos com você.';
+      $('res-fora').classList.add('on'); $('res-fora').focus(); return;
     }
-    ok.classList.add('on');
-    ok.focus();
+    var quente = q.temperatura === 'quente';
+    $('ok-title').textContent = quente ? 'Perfil com prioridade' : 'Aplicação recebida';
+    $('ok-text').textContent = primeiroNome + ', recebemos sua aplicação. ' +
+      (quente ? 'Seu perfil está entre os que analisamos primeiro. ' : 'Vamos analisar seu perfil. ') +
+      'Nossa equipe chama você no WhatsApp em até ' + (C.prazoContato || '24 horas úteis') + (quente ? '.' : ', se houver vaga para o seu perfil.');
+    if (C.estande) {
+      var e = $('ok-estande'); e.textContent = '';
+      e.appendChild(document.createTextNode('Está na ' + (C.evento || 'feira') + '? Passe no '));
+      var s = document.createElement('strong'); s.textContent = C.estande; e.appendChild(s);
+      e.appendChild(document.createTextNode(' e fale com a gente agora.')); e.hidden = false;
+    }
+    var num = digitos(C.whatsappEquipe);
+    if (num && (quente || q.temperatura === 'morno')) {
+      var msg = 'Olá! Acabei de aplicar na página da Tatuador de Elite' + (C.evento ? ' (' + C.evento + ')' : '') + '. Sou ' + dados.nome + ', Instagram @' + dados.instagram + '.';
+      var a = $('ok-whats'); a.href = 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg); a.hidden = false;
+    }
+    $('res-ok').classList.add('on'); $('res-ok').focus();
   }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (enviando) return;
-    tentou = true; aviso('');
-    var primeiro = null;
-    Object.keys(campos).forEach(function (k) { if (mostrar(k) && !primeiro) primeiro = campos[k]; });
-    if (primeiro) { primeiro.focus(); return; }
+    aviso('');
+    tentou[etapa] = true;
+    var falha = validaEtapa(etapa);
+    if (falha) { foca(falha); return; }
+    if (etapa < 3) { mostraEtapa(etapa + 1, true); return; }
     if ($('empresa').value) return; // robô
 
-    var falha = configOk();
-    if (falha) {
-      console.error('[cadastro] Configuração incompleta: ' + falha + '. Edite window.CADASTRO_CONFIG.');
-      aviso('Cadastro temporariamente indisponível. Tente novamente mais tarde.');
+    if (!C.endpoint) {
+      console.error('[aplicação] endpoint vazio. Edite window.LP_CONFIG no index.html.');
+      aviso('As aplicações estão temporariamente indisponíveis. Tente novamente mais tarde.');
       return;
     }
 
-    var dados = Object.assign({}, C.camposExtras || {}, {
-      nome: campos.nome.value.trim().replace(/\s+/g, ' '),
-      telefone: digitos(campos.telefone.value),
-      email: campos.email.value.trim().toLowerCase(),
-      enviado_em: new Date().toISOString(),
-      pagina: location.href
+    var q = qualifica();
+    var ig = $('instagram').value.trim().replace(/^@+/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[\/?].*$/, '').toLowerCase();
+    var tel = digitos($('whatsapp').value);
+    var dados = Object.assign({}, C.camposExtras || {}, rastreio, {
+      nome: $('nome').value.trim().replace(/\s+/g, ' '),
+      whatsapp: brasil() ? '55' + tel : tel,
+      email: $('email').value.trim().toLowerCase(),
+      instagram: ig,
+      perfil: radio('perfil'), tempo_tatuando: radio('tempo'), regiao: radio('regiao'),
+      faturamento_mensal: radio('faturamento'), verba_anuncios: radio('verba'), inicio: radio('inicio'),
+      aceitou_regras_garantia: true,
+      pontuacao: q.pontuacao, temperatura: q.temperatura, qualificado: q.qualificado, motivos_desqualificacao: q.motivos_desqualificacao,
+      enviado_em: new Date().toISOString(), pagina: location.origin + location.pathname
     });
+
     var c = corpo(dados);
     var ctrl = window.AbortController ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, C.tempoLimite || 15000) : null;
+    enviando = true; btn.disabled = true; btn.firstChild.nodeValue = 'Enviando… ';
 
-    enviando = true; btn.disabled = true; btn.textContent = 'Enviando…';
     fetch(C.endpoint, {
       method: 'POST',
       headers: Object.assign({ 'Content-Type': c.type, 'Accept': 'application/json' }, C.cabecalhos || {}),
@@ -291,27 +869,22 @@ window.CADASTRO_CONFIG = {
           var m = json && (json.mensagem || json.message || json.error);
           throw new Error(typeof m === 'string' ? m : 'HTTP ' + res.status);
         }
-        return json;
       });
-    }).then(function (json) {
-      var codigo = '';
-      if (C.cupom.modo === 'fixo') codigo = C.cupom.codigoFixo.trim();
-      if (C.cupom.modo === 'resposta') {
-        codigo = json && json[C.cupom.campoNaResposta || 'cupom'];
-        codigo = typeof codigo === 'string' ? codigo.trim() : '';
-        if (!codigo) console.error('[cadastro] Resposta confirmada sem o campo "' + (C.cupom.campoNaResposta || 'cupom') + '".');
-      }
-      sucesso(codigo, dados.email);
+    }).then(function () {
+      resultado(q, dados);
     }).catch(function (err) {
-      console.error('[cadastro]', err);
+      console.error('[aplicação]', err);
       aviso(err && err.name === 'AbortError'
         ? 'A conexão demorou demais. Verifique sua internet e tente de novo.'
-        : 'Não foi possível concluir seu cadastro. Tente novamente em instantes.');
+        : 'Não foi possível enviar sua aplicação. Tente novamente em instantes.');
     }).then(function () {
       if (timer) clearTimeout(timer);
-      enviando = false; btn.disabled = false; btn.textContent = 'Quero meu cupom de 10%';
+      enviando = false; btn.disabled = false;
+      if (!form.hidden) btn.firstChild.nodeValue = 'Enviar minha aplicação ';
     });
   });
+
+  mostraEtapa(1, false);
 })();
 </script>
 </body>
