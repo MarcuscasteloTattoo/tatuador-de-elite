@@ -1,7 +1,7 @@
-# Tatuador de Elite — LP de aplicação (Tattoo Week)
+# Tatuador de Elite — LP de aplicação (Tattoo Week, 20 a 22/11)
 
 Landing page de captura para **Marketing para Tatuadores**: resultados em 45 dias ou o dinheiro de volta.
-O formulário é uma aplicação em 3 etapas que **qualifica** o lead antes de enviar.
+O formulário é uma aplicação em 2 etapas que **qualifica** o lead antes de enviar.
 Página estática em um único `index.html`, pensada primeiro para o celular.
 
 ## Estrutura
@@ -28,38 +28,38 @@ ou faça o site atual desse domínio redirecionar para o endereço do GitHub Pag
 
 | Campo | O que faz |
 |---|---|
-| `endpoint` | URL que recebe as aplicações. Vazio = a página não envia e avisa que está indisponível. |
+| `endpoint` | URL que recebe as aplicações. Vazio = a página não envia e pede para falar no estande. |
 | `formato` | `"json"`, `"form"` ou `"json-texto"` (use `"json-texto"` com Google Apps Script). |
-| `evento` | Texto do selo no topo (ex.: `"Tattoo Week"`). |
+| `vsl.url` | Link da VSL: YouTube (inclusive Shorts), Vimeo ou arquivo `.mp4`. Vazio = mostra a foto da equipe. |
+| `vsl.formato` | `"vertical"` (9:16) ou `"horizontal"` (16:9). O player se ajusta à tela. |
+| `vsl.capa` | Imagem de capa opcional. Sem capa, a vertical usa uma capa preta e dourada com "Assista antes de aplicar". |
+| `vsl.duracao` | Ex.: `"2 min"`, aparece embaixo do botão de play. |
+| `evento` / `fimDoEvento` | Nome do evento e data/hora de término (contagem regressiva). Hoje: 22/11/2026 23:59. |
+| `encerrarAposPrazo` | `true` = depois do prazo o formulário some e aparece "Aplicações encerradas". |
 | `estande` | Ex.: `"Estande 42"`. Aparece na tela de aprovado. |
 | `whatsappEquipe` | Número com DDI, só dígitos. Vira botão "Falar com a equipe agora" para leads quente/morno. |
-| `prazoContato` | Prazo de retorno mostrado ao lead. |
-| `prazoAplicacoes` | Data real de encerramento (ISO). Mostra contagem regressiva. Vazio = sem contagem. |
-| `depoimentos` | Depoimentos reais e autorizados. Lista vazia = seção escondida. |
+
+O vídeo só carrega quando a pessoa toca no play (a página abre rápido no 4G da feira).
 
 ## Rastrear de onde veio o lead
 
-Use links diferentes em cada QR code:
+- QR do estande: `.../?origem=estande`
+- QR do panfleto: `.../?origem=panfleto`
+- Anúncios: `utm_source`, `utm_medium`, `utm_campaign`...
 
-- Estande: `.../?origem=estande`
-- Panfleto: `.../?origem=panfleto`
-- Instagram/anúncios: parâmetros `utm_source`, `utm_medium`, `utm_campaign`...
+## Qualificação (2 etapas)
 
-O valor chega no campo `origem` (e nos `utm_*`) de cada aplicação.
-
-## Qualificação
+Etapa 1: perfil, faturamento, verba para anúncios, quando quer começar. Etapa 2: nome, WhatsApp, Instagram e aceite das regras da garantia.
 
 | Pergunta | Pontos |
 |---|---|
-| Perfil | estúdio próprio 3 · dono com equipe 3 · residente 2 · ainda não tatua = **desqualifica** |
-| Tempo tatuando | <1 ano 0 · 1–3 1 · 3–5 2 · 5+ 3 |
+| Perfil | estúdio 3 · estúdio com equipe 3 · estúdio de terceiros 2 · ainda não tatua = **desqualifica** |
 | Faturamento | até 5 mil 0 · 5–10 1 · 10–20 2 · 20+ 3 |
 | Verba para anúncios | não pode = **desqualifica** · até 1 mil 1 · 1–3 mil 2 · 3 mil+ 3 |
 | Início | agora 3 · 30 dias 2 · pesquisando 0 |
 
-`temperatura`: **quente** (≥ 11 pontos e não está "só pesquisando"), **morno** (≥ 7), **frio**, ou **desqualificado**.
-Todos os leads são enviados com `pontuacao`, `temperatura`, `qualificado` e `motivos_desqualificacao`,
-para a equipe priorizar a fila. O lead também precisa marcar que leu e aceita as regras da garantia.
+`temperatura`: **quente** (≥ 9 e não está "só pesquisando"), **morno** (≥ 6), **frio** ou **desqualificado**.
+Todos os leads são enviados com `pontuacao`, `temperatura`, `qualificado` e `motivos_desqualificacao`.
 
 ## Antes de divulgar, confirme com o contrato
 
