@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>10% OFF · Tatuador de Elite × Romba Tattoo</title>
+<meta name="description" content="Cadastre-se e garanta seu cupom de 10% de desconto com a Romba Tattoo.">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO — edite só este bloco
+   ===================================================================== */
+window.CADASTRO_CONFIG = {
+  // URL que recebe o cadastro (webhook do Make/Zapier/n8n, API do seu CRM,
+  // Formspree, ou o Web App do Google Apps Script — veja integracao/apps-script-google-sheets.gs).
+  // Vazio = o formulário NÃO envia e mostra "cadastro indisponível".
+  endpoint: "",
+
+  // Formato do envio:
+  //  "json"       → application/json (APIs e webhooks em geral)
+  //  "form"       → application/x-www-form-urlencoded (formulários clássicos)
+  //  "json-texto" → JSON como text/plain (use com Google Apps Script, evita bloqueio CORS)
+  formato: "json",
+
+  // Cabeçalhos extras (ex.: { "Authorization": "Bearer ..." }). Não coloque chaves secretas em páginas públicas.
+  cabecalhos: {},
+
+  // Campos enviados junto com nome, telefone e email.
+  camposExtras: { origem: "lp-tatuador-de-elite-romba-tattoo" },
+
+  // Tempo máximo de espera pela confirmação (ms).
+  tempoLimite: 15000,
+
+  // Como o cupom chega ao cliente DEPOIS do envio confirmado:
+  //  "resposta" → a ferramenta devolve o código no JSON da resposta (campo abaixo)
+  //  "fixo"     → a página mostra o código definido em codigoFixo
+  //  "email"    → a ferramenta envia o cupom por e-mail; a página só confirma
+  cupom: {
+    modo: "resposta",
+    campoNaResposta: "cupom",
+    codigoFixo: ""
+  }
+};
+</script>
+
+<style>
+  :root{
+    --bg:#000; --fg:#fff; --muted:#C7C7C7; --soft:#A3A3A3;
+    --line:#3D3D3D; --field:#111; --accent:#D4A23A; --error:#FF8A7A; --error-line:#FF6B57;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,-apple-system,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{min-height:100vh;min-height:100dvh;display:flex;justify-content:center;padding:max(48px,env(safe-area-inset-top)) 24px max(64px,env(safe-area-inset-bottom))}
+  main{width:100%;max-width:480px;display:flex;flex-direction:column;gap:56px}
+
+  .logos{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:12px}
+  .logo{height:clamp(96px,30vw,128px);display:flex;align-items:center;justify-content:center}
+  .logo img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+  .logo--elite img{width:100%;max-width:168px;height:auto;border-radius:4px}
+  .x{font-family:'Pirata One',serif;font-size:30px;line-height:1;color:var(--accent)}
+
+  .hero{display:flex;flex-direction:column;align-items:center;gap:20px;text-align:center}
+  h1{margin:0;font-family:'Pirata One',serif;font-weight:400;font-size:clamp(44px,13vw,60px);line-height:1.02;letter-spacing:.5px}
+  h1 span{color:var(--accent)}
+  .sub{margin:0;font-size:18px;line-height:1.55;color:var(--muted);max-width:400px}
+
+  form{display:flex;flex-direction:column;gap:28px}
+  .field{display:flex;flex-direction:column;gap:8px}
+  label{font-size:15px;font-weight:600}
+  label small{font-size:inherit;font-weight:400;color:var(--soft)}
+  input{width:100%;height:56px;padding:0 16px;background:var(--field);color:var(--fg);border:1px solid var(--line);border-radius:4px;font:inherit;font-size:17px;outline:none;transition:border-color .15s,box-shadow .15s}
+  input:focus{border-color:var(--fg);box-shadow:0 0 0 3px rgba(255,255,255,.18)}
+  input[aria-invalid="true"]{border-color:var(--error-line)}
+  input[aria-invalid="true"]:focus{box-shadow:0 0 0 3px rgba(255,107,87,.25)}
+  .err{display:none;gap:8px;align-items:flex-start;font-size:14px;line-height:1.4;color:var(--error)}
+  .err.on{display:flex}
+  .err svg{flex:none;margin-top:1px}
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
+  .btn{height:60px;width:100%;margin-top:8px;border:0;border-radius:4px;background:var(--fg);color:#000;font:inherit;font-size:17px;font-weight:700;letter-spacing:.2px;cursor:pointer;transition:background .15s}
+  .btn:hover{background:var(--accent)}
+  .btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+  .btn[disabled]{opacity:.6;cursor:progress}
+  .alert{display:none;margin:0;padding:14px 16px;border:1px solid var(--error-line);border-radius:4px;font-size:15px;color:var(--error)}
+  .alert.on{display:block}
+
+  .ok{display:none;flex-direction:column;align-items:center;gap:20px;text-align:center;padding:36px 24px;border:1px solid #333;border-radius:4px}
+  .ok.on{display:flex}
+  .ok h2{margin:0;font-family:'Pirata One',serif;font-weight:400;font-size:40px;line-height:1.05}
+  .ok p{margin:0;font-size:16px;color:var(--muted)}
+  .code{width:100%;padding:18px 16px;border:1px dashed var(--accent);border-radius:4px;font-size:22px;font-weight:700;letter-spacing:2px;color:var(--accent);word-break:break-all;user-select:all}
+  .copy{height:48px;padding:0 24px;border:1px solid var(--fg);border-radius:4px;background:transparent;color:var(--fg);font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+  .copy:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+  footer{text-align:center;font-size:13px;color:#8F8F8F;letter-spacing:.4px}
+  [hidden]{display:none!important}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<main>
+  <header class="logos">
+    <div class="logo logo--elite"><img src="assets/logo-tatuador-de-elite.png" alt="Tatuador de Elite" width="133" height="53"></div>
+    <span class="x" aria-hidden="true">×</span>
+    <div class="logo"><img src="assets/logo-arromba.png" alt="Arromba Tattoo Shop" width="1448" height="1086"></div>
+  </header>
+
+  <section class="hero">
+    <svg aria-hidden="true" width="132" height="14" viewBox="0 0 132 14" fill="none" stroke="#5C5C5C"><line x1="0" y1="7" x2="54" y2="7"/><path d="M66 1 69 7 66 13 63 7Z" fill="#5C5C5C"/><line x1="78" y1="7" x2="132" y2="7"/></svg>
+    <h1>Seu próximo traço com <span>10% OFF.</span></h1>
+    <p class="sub">Cadastre-se e garanta seu cupom de 10% de desconto com a Romba Tattoo.</p>
+  </section>
+
+  <form id="form" novalidate aria-label="Cadastro para cupom">
+    <p class="alert" id="alerta" role="alert"></p>
+
+    <div class="field">
+      <label for="nome">Nome</label>
+      <input id="nome" name="nome" type="text" autocomplete="name" aria-describedby="e-nome" required>
+      <div class="err" id="e-nome" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label for="telefone">Telefone com DDD <small>· ex.: (31) 99999-9999</small></label>
+      <input id="telefone" name="telefone" type="tel" inputmode="tel" autocomplete="tel-national" maxlength="15" aria-describedby="e-telefone" required>
+      <div class="err" id="e-telefone" aria-live="polite"></div>
+    </div>
+
+    <div class="field">
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" aria-describedby="e-email" required>
+      <div class="err" id="e-email" aria-live="polite"></div>
+    </div>
+
+    <div class="hp" aria-hidden="true"><label for="empresa">Não preencha</label><input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off"></div>
+
+    <button class="btn" id="btn" type="submit">Quero meu cupom de 10%</button>
+  </form>
+
+  <section class="ok" id="ok" role="status" tabindex="-1">
+    <h2 id="ok-titulo">Cupom garantido.</h2>
+    <p id="ok-texto"></p>
+    <div class="code" id="codigo" hidden></div>
+    <button class="copy" id="copiar" type="button" hidden>Copiar código</button>
+  </section>
+
+  <footer>Tatuador de Elite × Romba Tattoo</footer>
+</main>
+</div>
+
+<script>
+(function () {
+  var C = window.CADASTRO_CONFIG || {};
+  var $ = function (id) { return document.getElementById(id); };
+  var form = $('form'), btn = $('btn'), alerta = $('alerta');
+  var campos = { nome: $('nome'), telefone: $('telefone'), email: $('email') };
+  var tocado = {}, tentou = false, enviando = false;
+  var ICONE = '<svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6.5"/><line x1="8" y1="4.5" x2="8" y2="8.5"/><circle cx="8" cy="11" r=".6" fill="currentColor"/></svg>';
+
+  function digitos(v) { return (v || '').replace(/\D/g, ''); }
+  function mascara(v) {
+    var d = digitos(v).slice(0, 11);
+    if (!d) return '';
+    if (d.length <= 2) return '(' + d;
+    if (d.length <= 6) return '(' + d.slice(0, 2) + ') ' + d.slice(2);
+    if (d.length <= 10) return '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6);
+    return '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7);
+  }
+
+  var regras = {
+    nome: function (v) {
+      var n = v.trim().replace(/\s+/g, ' ');
+      if (!n) return 'Informe seu nome.';
+      if (n.length < 3 || n.split(' ').length < 2) return 'Informe nome e sobrenome.';
+      return '';
+    },
+    telefone: function (v) {
+      var d = digitos(v);
+      if (!d) return 'Informe seu telefone com DDD.';
+      if (d.length < 10) return 'Telefone incompleto. Use DDD + número.';
+      if (d[0] === '0' || d[1] === '0') return 'DDD inválido. Confira os dois primeiros dígitos.';
+      if (d.length === 11 && d[2] !== '9') return 'Celular com 11 dígitos deve ter 9 após o DDD.';
+      return '';
+    },
+    email: function (v) {
+      var m = v.trim();
+      if (!m) return 'Informe seu e-mail.';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(m)) return 'E-mail inválido. Ex.: nome@email.com';
+      return '';
+    }
+  };
+
+  function mostrar(k) {
+    var msg = (tentou || tocado[k]) ? regras[k](campos[k].value) : '';
+    var box = $('e-' + k);
+    campos[k].setAttribute('aria-invalid', msg ? 'true' : 'false');
+    box.innerHTML = msg ? ICONE + '<span></span>' : '';
+    if (msg) box.querySelector('span').textContent = msg;
+    box.classList.toggle('on', !!msg);
+    return msg;
+  }
+  function aviso(t) { alerta.textContent = t || ''; alerta.classList.toggle('on', !!t); }
+
+  campos.telefone.addEventListener('input', function () {
+    var el = this, fim = el.selectionStart === el.value.length;
+    el.value = mascara(el.value);
+    if (fim) el.setSelectionRange(el.value.length, el.value.length);
+  });
+  Object.keys(campos).forEach(function (k) {
+    campos[k].addEventListener('blur', function () { if (this.value) tocado[k] = true; mostrar(k); });
+    campos[k].addEventListener('input', function () { if (tocado[k] || tentou) mostrar(k); aviso(''); });
+  });
+
+  function configOk() {
+    if (!C.endpoint) return 'endpoint vazio';
+    var modo = C.cupom && C.cupom.modo;
+    if (['resposta', 'fixo', 'email'].indexOf(modo) < 0) return 'cupom.modo inválido';
+    if (modo === 'fixo' && !(C.cupom.codigoFixo || '').trim()) return 'cupom.codigoFixo vazio';
+    return '';
+  }
+
+  function corpo(dados) {
+    if (C.formato === 'form') return { body: new URLSearchParams(dados).toString(), type: 'application/x-www-form-urlencoded;charset=UTF-8' };
+    if (C.formato === 'json-texto') return { body: JSON.stringify(dados), type: 'text/plain;charset=UTF-8' };
+    return { body: JSON.stringify(dados), type: 'application/json' };
+  }
+
+  function sucesso(codigo, email) {
+    form.hidden = true;
+    var ok = $('ok'), txt = $('ok-texto'), cod = $('codigo'), cp = $('copiar');
+    if (codigo) {
+      txt.textContent = 'Use este código ao agendar com a Romba Tattoo.';
+      cod.textContent = codigo; cod.hidden = false; cp.hidden = false;
+      cp.onclick = function () {
+        var feito = function () { cp.textContent = 'Código copiado'; };
+        if (navigator.clipboard) navigator.clipboard.writeText(codigo).then(feito, function () {});
+      };
+    } else if (C.cupom.modo === 'email') {
+      txt.textContent = 'Enviamos seu cupom para ' + email + '. Confira também a caixa de spam.';
+    } else {
+      $('ok-titulo').textContent = 'Cadastro confirmado.';
+      txt.textContent = 'Não conseguimos exibir seu cupom agora. Fale com a Romba Tattoo informando seu e-mail cadastrado.';
+    }
+    ok.classList.add('on');
+    ok.focus();
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (enviando) return;
+    tentou = true; aviso('');
+    var primeiro = null;
+    Object.keys(campos).forEach(function (k) { if (mostrar(k) && !primeiro) primeiro = campos[k]; });
+    if (primeiro) { primeiro.focus(); return; }
+    if ($('empresa').value) return; // robô
+
+    var falha = configOk();
+    if (falha) {
+      console.error('[cadastro] Configuração incompleta: ' + falha + '. Edite window.CADASTRO_CONFIG.');
+      aviso('Cadastro temporariamente indisponível. Tente novamente mais tarde.');
+      return;
+    }
+
+    var dados = Object.assign({}, C.camposExtras || {}, {
+      nome: campos.nome.value.trim().replace(/\s+/g, ' '),
+      telefone: digitos(campos.telefone.value),
+      email: campos.email.value.trim().toLowerCase(),
+      enviado_em: new Date().toISOString(),
+      pagina: location.href
+    });
+    var c = corpo(dados);
+    var ctrl = window.AbortController ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, C.tempoLimite || 15000) : null;
+
+    enviando = true; btn.disabled = true; btn.textContent = 'Enviando…';
+    fetch(C.endpoint, {
+      method: 'POST',
+      headers: Object.assign({ 'Content-Type': c.type, 'Accept': 'application/json' }, C.cabecalhos || {}),
+      body: c.body,
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function (res) {
+      return res.text().then(function (t) {
+        var json = null; try { json = t ? JSON.parse(t) : null; } catch (_) {}
+        if (!res.ok || (json && (json.ok === false || json.success === false))) {
+          var m = json && (json.mensagem || json.message || json.error);
+          throw new Error(typeof m === 'string' ? m : 'HTTP ' + res.status);
+        }
+        return json;
+      });
+    }).then(function (json) {
+      var codigo = '';
+      if (C.cupom.modo === 'fixo') codigo = C.cupom.codigoFixo.trim();
+      if (C.cupom.modo === 'resposta') {
+        codigo = json && json[C.cupom.campoNaResposta || 'cupom'];
+        codigo = typeof codigo === 'string' ? codigo.trim() : '';
+        if (!codigo) console.error('[cadastro] Resposta confirmada sem o campo "' + (C.cupom.campoNaResposta || 'cupom') + '".');
+      }
+      sucesso(codigo, dados.email);
+    }).catch(function (err) {
+      console.error('[cadastro]', err);
+      aviso(err && err.name === 'AbortError'
+        ? 'A conexão demorou demais. Verifique sua internet e tente de novo.'
+        : 'Não foi possível concluir seu cadastro. Tente novamente em instantes.');
+    }).then(function () {
+      if (timer) clearTimeout(timer);
+      enviando = false; btn.disabled = false; btn.textContent = 'Quero meu cupom de 10%';
+    });
+  });
+})();
+</script>
+</body>
+</html>
