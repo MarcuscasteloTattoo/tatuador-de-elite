@@ -49,17 +49,15 @@ O vídeo só carrega quando a pessoa toca no play (a página abre rápido no 4G 
 
 ## Qualificação (2 etapas)
 
-Etapa 1: perfil, faturamento, verba para anúncios, quando quer começar. Etapa 2: nome, WhatsApp, Instagram e aceite das regras da garantia.
+Etapa 1: faturamento mensal e verba para anúncios. Etapa 2: nome, WhatsApp, Instagram e aceite das regras da garantia.
 
 | Pergunta | Pontos |
 |---|---|
-| Perfil | estúdio 3 · estúdio com equipe 3 · estúdio de terceiros 2 · ainda não tatua = **desqualifica** |
-| Faturamento | até 5 mil 0 · 5–10 1 · 10–20 2 · 20+ 3 |
-| Verba para anúncios | não pode = **desqualifica** · até 1 mil 1 · 1–3 mil 2 · 3 mil+ 3 |
-| Início | agora 3 · 30 dias 2 · pesquisando 0 |
+| Faturamento | R$ 5–10 mil 1 · R$ 10–20 mil 2 · + de R$ 20 mil 3 |
+| Verba para anúncios | até R$ 1.500 1 · R$ 1.500–3 mil 2 · + de R$ 3 mil 3 |
 
-`temperatura`: **quente** (≥ 9 e não está "só pesquisando"), **morno** (≥ 6), **frio** ou **desqualificado**.
-Todos os leads são enviados com `pontuacao`, `temperatura`, `qualificado` e `motivos_desqualificacao`.
+`temperatura`: **quente** (5–6 pontos), **morno** (4) ou **frio** (2–3).
+Todos os leads são enviados com `pontuacao` e `temperatura` para a equipe priorizar a fila.
 
 ## Antes de divulgar, confirme com o contrato
 

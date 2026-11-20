@@ -162,6 +162,8 @@ window.LP_CONFIG = {
   .ql{font-weight:700;font-size:15.5px}
   .opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
   .opts.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .opts.one{grid-template-columns:1fr}
+  .opts.one .opt span{min-height:50px;font-size:15.5px}
   .opt{position:relative;display:block;cursor:pointer}
   .opt input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
   .opt span{display:flex;align-items:center;justify-content:center;text-align:center;min-height:50px;height:100%;padding:8px 10px;border-radius:11px;border:1.5px solid var(--line-soft);background:#0A0A09;font-size:14.5px;line-height:1.25;transition:border-color .12s,background .12s}
@@ -294,20 +296,9 @@ window.LP_CONFIG = {
 
       <fieldset data-step="1">
         <legend tabindex="-1">Seu perfil</legend>
-        <div class="q" data-q="perfil">
-          <span class="ql" id="l-perfil">Onde você tatua hoje?</span>
-          <div class="opts" role="radiogroup" aria-labelledby="l-perfil" aria-describedby="e-perfil">
-            <label class="opt"><input type="radio" name="perfil" value="estudio-proprio"><span>No meu estúdio</span></label>
-            <label class="opt"><input type="radio" name="perfil" value="dono-com-equipe"><span>No meu estúdio, com equipe</span></label>
-            <label class="opt"><input type="radio" name="perfil" value="residente"><span>Em estúdio de terceiros</span></label>
-            <label class="opt"><input type="radio" name="perfil" value="iniciante"><span>Ainda não tatuo profissionalmente</span></label>
-          </div>
-          <div class="err" id="e-perfil"></div>
-        </div>
         <div class="q" data-q="faturamento">
           <span class="ql" id="l-fat">Faturamento mensal hoje:</span>
-          <div class="opts" role="radiogroup" aria-labelledby="l-fat" aria-describedby="e-faturamento">
-            <label class="opt"><input type="radio" name="faturamento" value="ate-5mil"><span>Até R$ 5 mil</span></label>
+          <div class="opts one" role="radiogroup" aria-labelledby="l-fat" aria-describedby="e-faturamento">
             <label class="opt"><input type="radio" name="faturamento" value="5-10mil"><span>R$ 5 a 10 mil</span></label>
             <label class="opt"><input type="radio" name="faturamento" value="10-20mil"><span>R$ 10 a 20 mil</span></label>
             <label class="opt"><input type="radio" name="faturamento" value="20mil-mais"><span>+ de R$ 20 mil</span></label>
@@ -316,22 +307,12 @@ window.LP_CONFIG = {
         </div>
         <div class="q" data-q="verba">
           <span class="ql" id="l-verba">Pode investir em anúncios por mês:</span>
-          <div class="opts" role="radiogroup" aria-labelledby="l-verba" aria-describedby="e-verba">
-            <label class="opt"><input type="radio" name="verba" value="nao-posso"><span>Não posso agora</span></label>
-            <label class="opt"><input type="radio" name="verba" value="ate-1mil"><span>Até R$ 1 mil</span></label>
-            <label class="opt"><input type="radio" name="verba" value="1-3mil"><span>R$ 1 a 3 mil</span></label>
+          <div class="opts one" role="radiogroup" aria-labelledby="l-verba" aria-describedby="e-verba">
+            <label class="opt"><input type="radio" name="verba" value="ate-1500"><span>Até R$ 1.500</span></label>
+            <label class="opt"><input type="radio" name="verba" value="1500-3mil"><span>R$ 1.500 a 3 mil</span></label>
             <label class="opt"><input type="radio" name="verba" value="3mil-mais"><span>+ de R$ 3 mil</span></label>
           </div>
           <div class="err" id="e-verba"></div>
-        </div>
-        <div class="q" data-q="inicio">
-          <span class="ql" id="l-inicio">Quer começar:</span>
-          <div class="opts three" role="radiogroup" aria-labelledby="l-inicio" aria-describedby="e-inicio">
-            <label class="opt"><input type="radio" name="inicio" value="imediato"><span>Agora</span></label>
-            <label class="opt"><input type="radio" name="inicio" value="30-dias"><span>Em 30 dias</span></label>
-            <label class="opt"><input type="radio" name="inicio" value="pesquisando"><span>Só pesquisando</span></label>
-          </div>
-          <div class="err" id="e-inicio"></div>
         </div>
       </fieldset>
 
@@ -538,7 +519,7 @@ window.LP_CONFIG = {
   function checaCampo(id) { var el = $(id), msg = regras[id](el.value); el.setAttribute('aria-invalid', msg ? 'true' : 'false'); erro(id, msg); return msg; }
   function checaRadio(n) { var msg = radio(n) ? '' : 'Escolha uma opção.'; form.querySelector('[data-q="' + n + '"]').classList.toggle('bad', !!msg); erro(n, msg); return msg; }
   function checaAceite() { var msg = $('compromisso').checked ? '' : 'Para aplicar, você precisa concordar com as regras da garantia.'; $('agree-box').classList.toggle('bad', !!msg); erro('compromisso', msg); return msg; }
-  var porEtapa = { 1: ['perfil', 'faturamento', 'verba', 'inicio'], 2: ['nome', 'whatsapp', 'instagram', 'compromisso'] };
+  var porEtapa = { 1: ['faturamento', 'verba'], 2: ['nome', 'whatsapp', 'instagram', 'compromisso'] };
   function valida(n) {
     var primeiro = null;
     porEtapa[n].forEach(function (k) {
@@ -583,18 +564,14 @@ window.LP_CONFIG = {
 
   function qualifica() {
     var pts = {
-      perfil: { 'estudio-proprio': 3, 'dono-com-equipe': 3, 'residente': 2, 'iniciante': 0 },
-      faturamento: { 'ate-5mil': 0, '5-10mil': 1, '10-20mil': 2, '20mil-mais': 3 },
-      verba: { 'nao-posso': 0, 'ate-1mil': 1, '1-3mil': 2, '3mil-mais': 3 },
-      inicio: { 'imediato': 3, '30-dias': 2, 'pesquisando': 0 }
+      faturamento: { '5-10mil': 1, '10-20mil': 2, '20mil-mais': 3 },
+      verba: { 'ate-1500': 1, '1500-3mil': 2, '3mil-mais': 3 }
     };
     var score = 0;
     Object.keys(pts).forEach(function (k) { score += pts[k][radio(k)] || 0; });
-    var motivos = [];
-    if (radio('perfil') === 'iniciante') motivos.push('nao-tatua-profissionalmente');
-    if (radio('verba') === 'nao-posso') motivos.push('sem-verba-para-anuncios');
-    var temp = motivos.length ? 'desqualificado' : (score >= 9 && radio('inicio') !== 'pesquisando') ? 'quente' : score >= 6 ? 'morno' : 'frio';
-    return { pontuacao: score, temperatura: temp, qualificado: !motivos.length, motivos_desqualificacao: motivos.join(',') };
+    // 2 a 6 pontos: quente 5–6 · morno 4 · frio 2–3
+    var temp = score >= 5 ? 'quente' : score >= 4 ? 'morno' : 'frio';
+    return { pontuacao: score, temperatura: temp, qualificado: true, motivos_desqualificacao: '' };
   }
 
   function corpo(d) {
@@ -648,7 +625,7 @@ window.LP_CONFIG = {
       nome: $('nome').value.trim().replace(/\s+/g, ' '),
       whatsapp: intl() ? tel : '55' + tel,
       instagram: handle($('instagram').value).toLowerCase(),
-      perfil: radio('perfil'), faturamento_mensal: radio('faturamento'), verba_anuncios: radio('verba'), inicio: radio('inicio'),
+      faturamento_mensal: radio('faturamento'), verba_anuncios: radio('verba'),
       aceitou_regras_garantia: true,
       pontuacao: q.pontuacao, temperatura: q.temperatura, qualificado: q.qualificado, motivos_desqualificacao: q.motivos_desqualificacao,
       enviado_em: new Date().toISOString(), pagina: location.origin + location.pathname
