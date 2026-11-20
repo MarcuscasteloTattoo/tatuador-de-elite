@@ -21,7 +21,7 @@
 window.LP_CONFIG = {
   // URL que recebe as aplicações (webhook, CRM ou Google Apps Script —
   // veja integracao/apps-script-google-sheets.gs). Vazio = não envia.
-  endpoint: "",
+  endpoint: "https://script.google.com/macros/s/AKfycbzNQ2tst5YjCo02-bBt3706LB67jiO-nVtZF4ZJHLJvpsLqzucBVydvdqx1FtwiwQJa/exec",
   formato: "json-texto",    // "json-texto" (Google Apps Script) | "json" | "form"
   cabecalhos: {},
   tempoLimite: 15000,
@@ -48,7 +48,8 @@ window.LP_CONFIG = {
   // com os dados dele já escritos na mensagem.
   // Lead MORNO ou FRIO: vai só para a planilha, e o comercial chama depois.
   whatsappComercial: "5531972599897",
-  prazoContato: "24 horas úteis"
+  // Quando o comercial chama os leads morno/frio (texto da tela de confirmação).
+  prazoContato: "logo depois que a Tattoo Week terminar"
 };
 </script>
 
@@ -611,7 +612,7 @@ window.LP_CONFIG = {
       setTimeout(function () { location.href = link; }, 1800);
     } else {
       $('ok-title').textContent = 'Aplicação recebida';
-      $('ok-text').textContent = nome + ', recebemos sua aplicação. Nosso comercial vai avaliar seu perfil e chamar você no WhatsApp em até ' + (C.prazoContato || '24 horas úteis') + '.';
+      $('ok-text').textContent = nome + ', recebemos sua aplicação. Nosso comercial vai avaliar seu perfil e chamar você no WhatsApp ' + (C.prazoContato || 'logo depois que a Tattoo Week terminar') + '.';
     }
     if (C.estande) {
       var e = $('ok-estande'); e.textContent = '';
