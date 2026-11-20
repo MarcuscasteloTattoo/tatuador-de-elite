@@ -298,8 +298,6 @@ window.LP_CONFIG = {
         <div class="t"><span id="p-label">Etapa 1 de 2 · Seu contato</span><span id="p-pct">50%</span></div>
         <div class="bar"><i id="p-bar"></i></div>
       </div>
-      <p class="alert" id="alerta" role="alert"></p>
-
       <fieldset data-step="1">
         <legend tabindex="-1">Seu contato</legend>
         <div class="field">
@@ -349,6 +347,7 @@ window.LP_CONFIG = {
         </div>
       </fieldset>
 
+      <p class="alert" id="alerta" role="alert"></p>
       <div class="nav">
         <button class="btn" type="submit" id="btn">Continuar <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
         <button class="ghost" type="button" id="voltar" hidden>Voltar</button>
@@ -548,7 +547,10 @@ window.LP_CONFIG = {
     btn.firstChild.nodeValue = n === 2 ? 'Enviar aplicação ' : 'Continuar ';
     if (focar) { $('aplicar').scrollIntoView({ block: 'start', behavior: 'smooth' }); etapas[n - 1].querySelector('legend').focus({ preventScroll: true }); }
   }
-  function aviso(t) { alerta.textContent = t || ''; alerta.classList.toggle('on', !!t); }
+  function aviso(t) {
+    alerta.textContent = t || ''; alerta.classList.toggle('on', !!t);
+    if (t) alerta.scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
 
   form.addEventListener('change', function (e) {
     var n = e.target.name;
@@ -661,7 +663,9 @@ window.LP_CONFIG = {
     }).then(function (res) {
       return res.text().then(function (t) {
         var j = null; try { j = t ? JSON.parse(t) : null; } catch (_) {}
-        if (!res.ok || (j && (j.ok === false || j.success === false))) {
+        // com Google Apps Script, só confirma quando a planilha responde {"ok":true}
+        var exigeOk = C.formato === 'json-texto';
+        if (!res.ok || (exigeOk && !(j && j.ok === true)) || (j && (j.ok === false || j.success === false))) {
           var m = j && (j.mensagem || j.message || j.error);
           throw new Error(typeof m === 'string' ? m : 'HTTP ' + res.status);
         }
