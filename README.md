@@ -37,7 +37,7 @@ ou faça o site atual desse domínio redirecionar para o endereço do GitHub Pag
 | `evento` / `fimDoEvento` | Nome do evento e data/hora de término (contagem regressiva). Hoje: 22/11/2026 23:59. |
 | `encerrarAposPrazo` | `true` = depois do prazo o formulário some e aparece "Aplicações encerradas". |
 | `estande` | Ex.: `"Estande 42"`. Aparece na tela de aprovado. |
-| `whatsappEquipe` | Número com DDI, só dígitos. Vira botão "Falar com a equipe agora" para leads quente/morno. |
+| `whatsappComercial` | WhatsApp do comercial, só dígitos com DDI. Lead **quente** é levado direto para ele com os dados na mensagem. |
 
 O vídeo só carrega quando a pessoa toca no play (a página abre rápido no 4G da feira).
 
@@ -47,7 +47,7 @@ O vídeo só carrega quando a pessoa toca no play (a página abre rápido no 4G 
 - QR do panfleto: `.../?origem=panfleto`
 - Anúncios: `utm_source`, `utm_medium`, `utm_campaign`...
 
-## Qualificação (2 etapas)
+## Qualificação e caminhos do lead
 
 Etapa 1: faturamento mensal e verba para anúncios. Etapa 2: nome, WhatsApp, Instagram e aceite das regras da garantia.
 
@@ -56,8 +56,15 @@ Etapa 1: faturamento mensal e verba para anúncios. Etapa 2: nome, WhatsApp, Ins
 | Faturamento | R$ 5–10 mil 1 · R$ 10–20 mil 2 · + de R$ 20 mil 3 |
 | Verba para anúncios | até R$ 1.500 1 · R$ 1.500–3 mil 2 · + de R$ 3 mil 3 |
 
-`temperatura`: **quente** (5–6 pontos), **morno** (4) ou **frio** (2–3).
-Todos os leads são enviados com `pontuacao` e `temperatura` para a equipe priorizar a fila.
+| Temperatura | Pontos | O que acontece |
+|---|---|---|
+| **Quente** | 5–6 | Grava na planilha e, em ~2 s, abre o WhatsApp do comercial com nome, @, faturamento e investimento já escritos. Se a internet falhar, vai para o WhatsApp mesmo assim. |
+| **Morno** | 4 | Grava na planilha. Tela: "Nosso comercial vai avaliar seu perfil e chamar você em até 24 horas úteis." |
+| **Frio** | 2–3 | Igual ao morno. |
+
+Todos os leads também geram um **aviso no WhatsApp do comercial** (nome, contato, @, faturamento,
+investimento, temperatura e origem), enviado pelo Apps Script via CallMeBot ou Z-API.
+Instruções no topo de `integracao/apps-script-google-sheets.gs`.
 
 ## Antes de divulgar, confirme com o contrato
 
@@ -75,5 +82,5 @@ então o texto precisa bater com o contrato.
 
 1. Planilha → **Extensões → Apps Script** → cole `integracao/apps-script-google-sheets.gs`.
 2. **Implantar → Nova implantação → App da Web** (Executar como: Eu · Acesso: Qualquer pessoa).
-3. Cole a URL `/exec` em `endpoint` e use `formato: "json-texto"`.
-4. Opcional: propriedade `AVISAR_EMAIL` para receber e-mail a cada lead quente.
+3. Cole a URL `/exec` em `endpoint` (o `formato` já vem como `"json-texto"`).
+4. Para o aviso no WhatsApp, siga o topo do script e rode `testarAviso`.

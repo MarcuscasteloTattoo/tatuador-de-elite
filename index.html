@@ -22,7 +22,7 @@ window.LP_CONFIG = {
   // URL que recebe as aplicações (webhook, CRM ou Google Apps Script —
   // veja integracao/apps-script-google-sheets.gs). Vazio = não envia.
   endpoint: "",
-  formato: "json",          // "json" | "form" | "json-texto" (Apps Script)
+  formato: "json-texto",    // "json-texto" (Google Apps Script) | "json" | "form"
   cabecalhos: {},
   tempoLimite: 15000,
   camposExtras: { campanha: "tattoo-week-2026" },
@@ -41,8 +41,13 @@ window.LP_CONFIG = {
   fimDoEvento: "2026-11-22T23:59:00-03:00",   // contagem regressiva até aqui
   encerrarAposPrazo: true,                    // depois do prazo, fecha as aplicações
 
-  estande: "",              // ex.: "Estande 42" — aparece para leads aprovados
-  whatsappEquipe: "",       // só dígitos com DDI, ex.: "5531999999999"
+  estande: "",              // ex.: "Estande 42" — aparece na tela de confirmação
+
+  // WhatsApp do comercial, só dígitos com DDI (ex.: "5511999999999").
+  // Lead QUENTE: depois de enviar, é levado direto para este WhatsApp
+  // com os dados dele já escritos na mensagem.
+  // Lead MORNO ou FRIO: vai só para a planilha, e o comercial chama depois.
+  whatsappComercial: "",
   prazoContato: "24 horas úteis"
 };
 </script>
@@ -354,9 +359,9 @@ window.LP_CONFIG = {
       <h3 id="ok-title">Aplicação recebida</h3>
       <p id="ok-text"></p>
       <p id="ok-estande" hidden></p>
-      <a class="btn" id="ok-whats" href="#" target="_blank" rel="noopener" hidden>
+      <a class="btn" id="ok-whats" href="#" rel="noopener" hidden>
         <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.3 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg>
-        Falar com a equipe agora
+        Abrir o WhatsApp do comercial
       </a>
     </div>
     <div class="result" id="res-fora" role="status" tabindex="-1">
@@ -571,8 +576,12 @@ window.LP_CONFIG = {
     Object.keys(pts).forEach(function (k) { score += pts[k][radio(k)] || 0; });
     // 2 a 6 pontos: quente 5–6 · morno 4 · frio 2–3
     var temp = score >= 5 ? 'quente' : score >= 4 ? 'morno' : 'frio';
-    return { pontuacao: score, temperatura: temp, qualificado: true, motivos_desqualificacao: '' };
+    return { pontuacao: score, temperatura: temp };
   }
+  var ROTULO = {
+    '5-10mil': 'R$ 5 a 10 mil', '10-20mil': 'R$ 10 a 20 mil', '20mil-mais': '+ de R$ 20 mil',
+    'ate-1500': 'Até R$ 1.500', '1500-3mil': 'R$ 1.500 a 3 mil', '3mil-mais': '+ de R$ 3 mil'
+  };
 
   function corpo(d) {
     if (C.formato === 'form') return { body: new URLSearchParams(d).toString(), type: 'application/x-www-form-urlencoded;charset=UTF-8' };
@@ -580,27 +589,35 @@ window.LP_CONFIG = {
     return { body: JSON.stringify(d), type: 'application/json' };
   }
 
-  function resultado(q, d) {
+  // link do WhatsApp do comercial para lead quente, com os dados já na mensagem
+  function linkComercial(q, d) {
+    var num = digitos(C.whatsappComercial || C.whatsappEquipe);
+    if (!num || q.temperatura !== 'quente') return '';
+    var msg = 'Olá! Acabei de aplicar na página da Tatuador de Elite (' + evento + ').\n\n' +
+      'Nome: ' + d.nome + '\n' +
+      'Instagram: @' + d.instagram + '\n' +
+      'Faturamento mensal: ' + d.faturamento_mensal + '\n' +
+      'Investimento em anúncios: ' + d.verba_anuncios;
+    return 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg);
+  }
+
+  function resultado(q, d, link) {
     form.hidden = true;
     var nome = d.nome.split(' ')[0];
-    if (!q.qualificado) {
-      $('fora-text').textContent = nome + ', esta condição é só para tatuadores que já atendem profissionalmente e podem investir em anúncios todo mês. Guardamos sua aplicação e falamos com você quando fizer sentido.';
-      $('res-fora').classList.add('on'); $('res-fora').focus(); return;
+    if (link) {
+      $('ok-title').textContent = 'Perfil com prioridade';
+      $('ok-text').textContent = nome + ', seu perfil entra na frente da fila. Estamos abrindo o WhatsApp do nosso comercial para você falar com a gente agora.';
+      var a = $('ok-whats'); a.href = link; a.hidden = false;
+      setTimeout(function () { location.href = link; }, 1800);
+    } else {
+      $('ok-title').textContent = 'Aplicação recebida';
+      $('ok-text').textContent = nome + ', recebemos sua aplicação. Nosso comercial vai avaliar seu perfil e chamar você no WhatsApp em até ' + (C.prazoContato || '24 horas úteis') + '.';
     }
-    var quente = q.temperatura === 'quente';
-    $('ok-title').textContent = quente ? 'Perfil com prioridade' : 'Aplicação recebida';
-    $('ok-text').textContent = nome + ', ' + (quente ? 'seu perfil entra na frente da fila. ' : 'vamos analisar seu perfil. ') +
-      'Nossa equipe chama você no WhatsApp em até ' + (C.prazoContato || '24 horas úteis') + (quente ? '.' : ', se houver vaga.');
     if (C.estande) {
       var e = $('ok-estande'); e.textContent = '';
       e.appendChild(document.createTextNode('Está na ' + evento + '? Passe no '));
       var s = document.createElement('strong'); s.textContent = C.estande; e.appendChild(s);
       e.appendChild(document.createTextNode(' e feche sua vaga agora.')); e.hidden = false;
-    }
-    var num = digitos(C.whatsappEquipe);
-    if (num && q.temperatura !== 'frio') {
-      var msg = 'Olá! Acabei de aplicar na página da Tatuador de Elite (' + evento + '). Sou ' + d.nome + ', Instagram @' + d.instagram + '.';
-      var a = $('ok-whats'); a.href = 'https://wa.me/' + num + '?text=' + encodeURIComponent(msg); a.hidden = false;
     }
     $('res-ok').classList.add('on'); $('res-ok').focus();
   }
@@ -614,22 +631,25 @@ window.LP_CONFIG = {
     if (falha) { foca(falha); return; }
     if (etapa === 1) { mostra(2, true); return; }
     if ($('empresa').value) return;
-    if (!C.endpoint) {
-      console.error('[aplicação] endpoint vazio. Edite window.LP_CONFIG no index.html.');
-      aviso('As aplicações estão temporariamente indisponíveis. Fale com a gente no estande.');
-      return;
-    }
     var q = qualifica();
     var tel = digitos($('whatsapp').value);
     var d = Object.assign({}, C.camposExtras || {}, rastreio, {
       nome: $('nome').value.trim().replace(/\s+/g, ' '),
       whatsapp: intl() ? tel : '55' + tel,
       instagram: handle($('instagram').value).toLowerCase(),
-      faturamento_mensal: radio('faturamento'), verba_anuncios: radio('verba'),
+      faturamento_mensal: ROTULO[radio('faturamento')], verba_anuncios: ROTULO[radio('verba')],
+      pontuacao: q.pontuacao, temperatura: q.temperatura,
       aceitou_regras_garantia: true,
-      pontuacao: q.pontuacao, temperatura: q.temperatura, qualificado: q.qualificado, motivos_desqualificacao: q.motivos_desqualificacao,
       enviado_em: new Date().toISOString(), pagina: location.origin + location.pathname
     });
+    var link = linkComercial(q, d);
+    d.destino = link ? 'whatsapp-comercial' : 'planilha';
+    if (!C.endpoint) {
+      console.error('[aplicação] endpoint vazio. Edite window.LP_CONFIG no index.html.');
+      if (link) { resultado(q, d, link); return; } // quente ainda chega ao comercial pelo WhatsApp
+      aviso('As aplicações estão temporariamente indisponíveis. Fale com a gente no estande.');
+      return;
+    }
     var c = corpo(d);
     var ctrl = window.AbortController ? new AbortController() : null;
     var timer = ctrl ? setTimeout(function () { ctrl.abort(); }, C.tempoLimite || 15000) : null;
@@ -645,9 +665,10 @@ window.LP_CONFIG = {
           throw new Error(typeof m === 'string' ? m : 'HTTP ' + res.status);
         }
       });
-    }).then(function () { resultado(q, d); })
+    }).then(function () { resultado(q, d, link); })
       .catch(function (err) {
         console.error('[aplicação]', err);
+        if (link) { resultado(q, d, link); return; } // sem internet boa, o quente não se perde: vai pelo WhatsApp
         aviso(err && err.name === 'AbortError' ? 'A conexão demorou demais. Verifique sua internet e tente de novo.' : 'Não foi possível enviar sua aplicação. Tente novamente em instantes.');
       })
       .then(function () {
