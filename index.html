@@ -47,7 +47,7 @@ window.LP_CONFIG = {
   // Lead QUENTE: depois de enviar, é levado direto para este WhatsApp
   // com os dados dele já escritos na mensagem.
   // Lead MORNO ou FRIO: vai só para a planilha, e o comercial chama depois.
-  whatsappComercial: "",
+  whatsappComercial: "5531972599897",
   prazoContato: "24 horas úteis"
 };
 </script>
@@ -294,13 +294,33 @@ window.LP_CONFIG = {
 
     <form id="form" novalidate aria-label="Aplicação Tatuador de Elite">
       <div class="progress" aria-hidden="true">
-        <div class="t"><span id="p-label">Etapa 1 de 2 · Seu perfil</span><span id="p-pct">50%</span></div>
+        <div class="t"><span id="p-label">Etapa 1 de 2 · Seu contato</span><span id="p-pct">50%</span></div>
         <div class="bar"><i id="p-bar"></i></div>
       </div>
       <p class="alert" id="alerta" role="alert"></p>
 
       <fieldset data-step="1">
-        <legend tabindex="-1">Seu perfil</legend>
+        <legend tabindex="-1">Seu contato</legend>
+        <div class="field">
+          <label for="nome">Nome completo</label>
+          <input id="nome" name="nome" type="text" autocomplete="name" aria-describedby="e-nome">
+          <div class="err" id="e-nome"></div>
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp <small>· (31) 99999-9999 · fora do Brasil, comece com +</small></label>
+          <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="e-whatsapp">
+          <div class="err" id="e-whatsapp"></div>
+        </div>
+        <div class="field">
+          <label for="instagram">Instagram do seu trabalho</label>
+          <div class="pre"><b aria-hidden="true">@</b><input id="instagram" name="instagram" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" aria-describedby="e-instagram"></div>
+          <div class="err" id="e-instagram"></div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="empresa">Não preencha</label><input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off"></div>
+      </fieldset>
+
+      <fieldset data-step="2" hidden>
+        <legend tabindex="-1">Seu momento</legend>
         <div class="q" data-q="faturamento">
           <span class="ql" id="l-fat">Faturamento mensal hoje:</span>
           <div class="opts one" role="radiogroup" aria-labelledby="l-fat" aria-describedby="e-faturamento">
@@ -319,25 +339,6 @@ window.LP_CONFIG = {
           </div>
           <div class="err" id="e-verba"></div>
         </div>
-      </fieldset>
-
-      <fieldset data-step="2" hidden>
-        <legend tabindex="-1">Seu contato</legend>
-        <div class="field">
-          <label for="nome">Nome completo</label>
-          <input id="nome" name="nome" type="text" autocomplete="name" aria-describedby="e-nome">
-          <div class="err" id="e-nome"></div>
-        </div>
-        <div class="field">
-          <label for="whatsapp">WhatsApp <small>· (31) 99999-9999 · fora do Brasil, comece com +</small></label>
-          <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="e-whatsapp">
-          <div class="err" id="e-whatsapp"></div>
-        </div>
-        <div class="field">
-          <label for="instagram">Instagram do seu trabalho</label>
-          <div class="pre"><b aria-hidden="true">@</b><input id="instagram" name="instagram" type="text" autocapitalize="off" autocomplete="off" spellcheck="false" aria-describedby="e-instagram"></div>
-          <div class="err" id="e-instagram"></div>
-        </div>
         <div>
           <label class="agree" id="agree-box" for="compromisso">
             <input id="compromisso" name="compromisso" type="checkbox" aria-describedby="e-compromisso">
@@ -345,7 +346,6 @@ window.LP_CONFIG = {
           </label>
           <div class="err" id="e-compromisso" style="margin-top:8px"></div>
         </div>
-        <div class="hp" aria-hidden="true"><label for="empresa">Não preencha</label><input id="empresa" name="empresa" type="text" tabindex="-1" autocomplete="off"></div>
       </fieldset>
 
       <div class="nav">
@@ -524,7 +524,7 @@ window.LP_CONFIG = {
   function checaCampo(id) { var el = $(id), msg = regras[id](el.value); el.setAttribute('aria-invalid', msg ? 'true' : 'false'); erro(id, msg); return msg; }
   function checaRadio(n) { var msg = radio(n) ? '' : 'Escolha uma opção.'; form.querySelector('[data-q="' + n + '"]').classList.toggle('bad', !!msg); erro(n, msg); return msg; }
   function checaAceite() { var msg = $('compromisso').checked ? '' : 'Para aplicar, você precisa concordar com as regras da garantia.'; $('agree-box').classList.toggle('bad', !!msg); erro('compromisso', msg); return msg; }
-  var porEtapa = { 1: ['faturamento', 'verba'], 2: ['nome', 'whatsapp', 'instagram', 'compromisso'] };
+  var porEtapa = { 1: ['nome', 'whatsapp', 'instagram'], 2: ['faturamento', 'verba', 'compromisso'] };
   function valida(n) {
     var primeiro = null;
     porEtapa[n].forEach(function (k) {
@@ -540,7 +540,7 @@ window.LP_CONFIG = {
   function mostra(n, focar) {
     etapa = n;
     etapas.forEach(function (f) { f.hidden = +f.dataset.step !== n; });
-    $('p-label').textContent = 'Etapa ' + n + ' de 2 · ' + (n === 1 ? 'Seu perfil' : 'Seu contato');
+    $('p-label').textContent = 'Etapa ' + n + ' de 2 · ' + (n === 1 ? 'Seu contato' : 'Seu momento');
     $('p-pct').textContent = n === 1 ? '50%' : '100%';
     $('p-bar').style.width = n === 1 ? '50%' : '100%';
     voltar.hidden = n === 1;
@@ -551,7 +551,7 @@ window.LP_CONFIG = {
 
   form.addEventListener('change', function (e) {
     var n = e.target.name;
-    if (porEtapa[1].indexOf(n) >= 0 && tentou[1]) checaRadio(n);
+    if ((n === 'faturamento' || n === 'verba') && tentou[2]) checaRadio(n);
     if (n === 'compromisso' && tentou[2]) checaAceite();
     aviso('');
   });
@@ -562,7 +562,7 @@ window.LP_CONFIG = {
     if (noFim) this.setSelectionRange(this.value.length, this.value.length);
   });
   Object.keys(regras).forEach(function (k) {
-    $(k).addEventListener('blur', function () { if (this.value || tentou[2]) checaCampo(k); });
+    $(k).addEventListener('blur', function () { if (this.value || tentou[1]) checaCampo(k); });
     $(k).addEventListener('input', function () { if (this.getAttribute('aria-invalid') === 'true') checaCampo(k); aviso(''); });
   });
   voltar.addEventListener('click', function () { mostra(1, true); });

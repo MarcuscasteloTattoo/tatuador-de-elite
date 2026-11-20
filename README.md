@@ -49,22 +49,19 @@ O vídeo só carrega quando a pessoa toca no play (a página abre rápido no 4G 
 
 ## Qualificação e caminhos do lead
 
-Etapa 1: faturamento mensal e verba para anúncios. Etapa 2: nome, WhatsApp, Instagram e aceite das regras da garantia.
+Etapa 1: nome, WhatsApp e Instagram. Etapa 2: faturamento mensal, verba para anúncios e aceite das regras da garantia.
 
 | Pergunta | Pontos |
 |---|---|
 | Faturamento | R$ 5–10 mil 1 · R$ 10–20 mil 2 · + de R$ 20 mil 3 |
 | Verba para anúncios | até R$ 1.500 1 · R$ 1.500–3 mil 2 · + de R$ 3 mil 3 |
 
-| Temperatura | Pontos | O que acontece |
-|---|---|---|
-| **Quente** | 5–6 | Grava na planilha e, em ~2 s, abre o WhatsApp do comercial com nome, @, faturamento e investimento já escritos. Se a internet falhar, vai para o WhatsApp mesmo assim. |
-| **Morno** | 4 | Grava na planilha. Tela: "Nosso comercial vai avaliar seu perfil e chamar você em até 24 horas úteis." |
-| **Frio** | 2–3 | Igual ao morno. |
+Todos os leads vão para a planilha (aba **Aplicacoes**, temperatura colorida, coluna `status_comercial` para a equipe).
 
-Todos os leads também geram um **aviso no WhatsApp do comercial** (nome, contato, @, faturamento,
-investimento, temperatura e origem), enviado pelo Apps Script via CallMeBot ou Z-API.
-Instruções no topo de `integracao/apps-script-google-sheets.gs`.
+| Temperatura | Pontos | Tela depois de enviar |
+|---|---|---|
+| **Quente** | 5–6 | "Perfil com prioridade" + botão para o WhatsApp do comercial (abre sozinho em ~2 s), com nome, @, faturamento e investimento já na mensagem. Se a internet falhar, vai para o WhatsApp mesmo assim. |
+| **Morno / frio** | 2–4 | "Nosso comercial vai avaliar seu perfil e chamar você no WhatsApp em até 24 horas úteis." |
 
 ## Antes de divulgar, confirme com o contrato
 
@@ -83,4 +80,3 @@ então o texto precisa bater com o contrato.
 1. Planilha → **Extensões → Apps Script** → cole `integracao/apps-script-google-sheets.gs`.
 2. **Implantar → Nova implantação → App da Web** (Executar como: Eu · Acesso: Qualquer pessoa).
 3. Cole a URL `/exec` em `endpoint` (o `formato` já vem como `"json-texto"`).
-4. Para o aviso no WhatsApp, siga o topo do script e rode `testarAviso`.
